@@ -15,7 +15,7 @@ export default function PlayGamePage() {
                     display: 'block',
                     overflow: 'hidden',
                 }}
-                title="FillWords Game"
+                title="Tile Challenge Game"
                 allow="autoplay"
                 scrolling="no"
             />

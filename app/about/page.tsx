@@ -2,9 +2,9 @@ import type { Metadata } from 'next';
 import AdSlot from '../components/AdSlot';
 
 export const metadata: Metadata = {
-    title: 'About Us – FillWords',
-    description: 'Learn about FillWords, our mission to create the ultimate free online word puzzle experience, and the team behind the game.',
-    keywords: ['about FillWords', 'word game team', 'who made FillWords'],
+    title: 'About Us – Tile Challenge',
+    description: 'Learn about Tile Challenge, our mission to create the ultimate free online word puzzle experience, and the team behind the game.',
+    keywords: ['about Tile Challenge', 'word game team', 'who made Tile Challenge'],
 };
 
 export default function AboutPage() {
@@ -12,7 +12,7 @@ export default function AboutPage() {
         <>
             <div className="page-header">
                 <div className="container">
-                    <h1 className="gradient-text">About FillWords</h1>
+                    <h1 className="gradient-text">About Tile Challenge</h1>
                     <p>Our story, mission, and the passion behind every word puzzle.</p>
                 </div>
             </div>
@@ -20,16 +20,16 @@ export default function AboutPage() {
             <div className="page-content">
                 <h2>Our Story</h2>
                 <p>
-                    FillWords was born from a simple idea: what if word search puzzles could be more engaging,
+                    Tile Challenge was born from a simple idea: what if word search puzzles could be more engaging,
                     more strategic, and more satisfying? The result is a game where you swipe through grids of
                     letters to uncover hidden words — an experience that&apos;s instantly intuitive yet endlessly
                     rewarding.
                 </p>
                 <p>
-                    We launched FillWords with a clear vision — to create a free, accessible, and beautifully
+                    We launched Tile Challenge with a clear vision — to create a free, accessible, and beautifully
                     designed word puzzle game that anyone can enjoy. Whether you&apos;re a student taking a study break, a
                     professional unwinding after work, or a parent looking for screen time that&apos;s actually
-                    beneficial for your kids, FillWords has something for you.
+                    beneficial for your kids, Tile Challenge has something for you.
                 </p>
 
                 <h2>Our Mission</h2>
@@ -39,7 +39,7 @@ export default function AboutPage() {
                     is to make high-quality word puzzle experiences freely available to everyone, everywhere.
                 </p>
                 <p>
-                    Every puzzle in FillWords is handcrafted with care. From curating the perfect word lists to
+                    Every puzzle in Tile Challenge is handcrafted with care. From curating the perfect word lists to
                     fine-tuning the difficulty progression, we obsess over the details so you can simply enjoy
                     the puzzles.
                 </p>
@@ -48,7 +48,7 @@ export default function AboutPage() {
 
                 <h2>What Makes Us Different</h2>
                 <p>
-                    Unlike traditional word search games, FillWords uses a swipe-to-connect mechanic. Instead
+                    Unlike traditional word search games, Tile Challenge uses a swipe-to-connect mechanic. Instead
                     of circling words in a grid full of random letters, every letter belongs to exactly one word.
                     You trace paths through adjacent letters to spell words, and as you find them, the grid
                     gradually clears — creating a satisfying sense of progress as you solve the puzzle.
@@ -83,7 +83,7 @@ export default function AboutPage() {
                 <p>
                     We love hearing from our community! Whether you have feedback, suggestions, bug reports,
                     or just want to say hello, don&apos;t hesitate to reach out through our{' '}
-                    <a href="/contact">Contact page</a>. Your input helps us make FillWords better for
+                    <a href="/contact">Contact page</a>. Your input helps us make Tile Challenge better for
                     everyone.
                 </p>
 

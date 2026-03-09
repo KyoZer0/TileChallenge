@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Accessibility Statement',
-    description: 'FillWords is committed to digital accessibility. Learn about our efforts to make our word puzzle game available to everyone.',
-    keywords: ['FillWords accessibility', 'accessible word game', 'web accessibility statement'],
+    description: 'Tile Challenge is committed to digital accessibility. Learn about our efforts to make our word puzzle game available to everyone.',
+    keywords: ['Tile Challenge accessibility', 'accessible word game', 'web accessibility statement'],
 };
 
 export default function AccessibilityPage() {
@@ -12,13 +12,13 @@ export default function AccessibilityPage() {
             <div className="page-header">
                 <div className="container">
                     <h1 className="gradient-text">Accessibility Statement</h1>
-                    <p>Our commitment to making FillWords accessible to everyone.</p>
+                    <p>Our commitment to making Tile Challenge accessible to everyone.</p>
                 </div>
             </div>
 
             <div className="page-content">
                 <p>
-                    FillWords is committed to ensuring digital accessibility for people with disabilities.
+                    Tile Challenge is committed to ensuring digital accessibility for people with disabilities.
                     We are continually improving the user experience for everyone and applying the relevant
                     accessibility standards to ensure we provide equal access to all of our users.
                 </p>
@@ -43,7 +43,7 @@ export default function AccessibilityPage() {
 
                 <h2>Game Accessibility</h2>
                 <p>
-                    We recognize that the game component of FillWords presents additional accessibility
+                    We recognize that the game component of Tile Challenge presents additional accessibility
                     challenges due to its visual and interactive nature. We are working on the following
                     improvements:
                 </p>
@@ -67,12 +67,12 @@ export default function AccessibilityPage() {
 
                 <h2>Feedback</h2>
                 <p>
-                    We welcome your feedback on the accessibility of FillWords. If you encounter
+                    We welcome your feedback on the accessibility of Tile Challenge. If you encounter
                     accessibility barriers or have suggestions for improvement, please let us know:
                 </p>
                 <ul>
                     <li>Contact us through our <a href="/contact">Contact page</a></li>
-                    <li>Email: <strong>accessibility@fillwords.online</strong></li>
+                    <li>Email: <strong>accessibility@Tile Challenge.online</strong></li>
                 </ul>
                 <p>
                     We try to respond to accessibility feedback within 5 business days and will do our

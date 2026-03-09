@@ -9,6 +9,6 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/api/', '/_next/'],
       },
     ],
-    sitemap: 'https://fillwords.com/sitemap.xml',
+    sitemap: 'https://tilechallenge.com/sitemap.xml',
   };
 }

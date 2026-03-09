@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import AdSlot from '../components/AdSlot';
 
-const SUPPORT_EMAIL = 'contact@fillwords.com';
+const SUPPORT_EMAIL = 'contact@tilechallenge.com';
 
 export default function ContactPage() {
     const [submitted, setSubmitted] = useState(false);
@@ -17,7 +17,7 @@ export default function ContactPage() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const mailSubject = `[FillWords] ${formData.subject || 'General Inquiry'}`;
+        const mailSubject = `[Tile Challenge] ${formData.subject || 'General Inquiry'}`;
         const mailBody = [
             `Name: ${formData.name}`,
             `Email: ${formData.email}`,
@@ -226,7 +226,7 @@ export default function ContactPage() {
                     <h2>Frequently Asked</h2>
                     <p>
                         Before reaching out, you might find your answer in our <a href="/faq">FAQ page</a>.
-                        We&apos;ve compiled answers to the most common questions about FillWords, gameplay
+                        We&apos;ve compiled answers to the most common questions about Tile Challenge, gameplay
                         mechanics, and technical issues.
                     </p>
                 </div>

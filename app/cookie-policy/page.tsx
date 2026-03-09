@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Cookie Policy',
-    description: 'Learn about the cookies FillWords uses, why we use them, and how to manage your cookie preferences.',
-    keywords: ['FillWords cookies', 'cookie policy', 'cookie preferences', 'tracking cookies'],
+    description: 'Learn about the cookies Tile Challenge uses, why we use them, and how to manage your cookie preferences.',
+    keywords: ['Tile Challenge cookies', 'cookie policy', 'cookie preferences', 'tracking cookies'],
 };
 
 export default function CookiePolicyPage() {
@@ -18,7 +18,7 @@ export default function CookiePolicyPage() {
 
             <div className="page-content">
                 <p>
-                    This Cookie Policy explains what cookies are, how FillWords uses them, and how you can
+                    This Cookie Policy explains what cookies are, how Tile Challenge uses them, and how you can
                     control your cookie preferences. By continuing to use our website, you consent to the use
                     of cookies as described in this policy.
                 </p>
@@ -32,7 +32,7 @@ export default function CookiePolicyPage() {
                 </p>
 
                 <h2>How We Use Cookies</h2>
-                <p>FillWords uses cookies for the following purposes:</p>
+                <p>Tile Challenge uses cookies for the following purposes:</p>
 
                 <h3>Essential Cookies</h3>
                 <p>
@@ -133,7 +133,7 @@ export default function CookiePolicyPage() {
                 <h2>Contact Us</h2>
                 <p>
                     If you have any questions about our use of cookies, please <a href="/contact">contact us</a>{' '}
-                    or email <strong>privacy@fillwords.online</strong>.
+                    or email <strong>privacy@Tile Challenge.online</strong>.
                 </p>
             </div>
         </>

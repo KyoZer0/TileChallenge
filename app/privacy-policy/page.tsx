@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
     title: 'Privacy Policy',
-    description: 'Read the FillWords Privacy Policy. Learn how we collect, use, and protect your personal data when you use our free online word puzzle game.',
-    keywords: ['FillWords privacy policy', 'data protection', 'cookie policy word game'],
+    description: 'Read the Tile Challenge Privacy Policy. Learn how we collect, use, and protect your personal data when you use our free online word puzzle game.',
+    keywords: ['Tile Challenge privacy policy', 'data protection', 'cookie policy word game'],
 };
 
 export default function PrivacyPolicyPage() {
@@ -18,7 +18,7 @@ export default function PrivacyPolicyPage() {
 
             <div className="page-content">
                 <p>
-                    At FillWords, we are committed to protecting your privacy and ensuring transparency
+                    At Tile Challenge, we are committed to protecting your privacy and ensuring transparency
                     about how your data is handled. This Privacy Policy explains what information we collect,
                     how we use it, and your rights regarding your personal data.
                 </p>
@@ -93,12 +93,12 @@ export default function PrivacyPolicyPage() {
                 <ul>
                     <li>With service providers who assist in operating our website (subject to confidentiality agreements)</li>
                     <li>If required by law, regulation, or legal process</li>
-                    <li>To protect the rights, property, or safety of FillWords, our users, or the public</li>
+                    <li>To protect the rights, property, or safety of Tile Challenge, our users, or the public</li>
                 </ul>
 
                 <h2>5. Children&apos;s Privacy</h2>
                 <p>
-                    FillWords is designed to be family-friendly. We do not knowingly collect personal
+                    Tile Challenge is designed to be family-friendly. We do not knowingly collect personal
                     information from children under the age of 13. If you are a parent or guardian and
                     believe that your child has provided us with personal information, please{' '}
                     <a href="/contact">contact us</a> immediately so we can take appropriate action.
@@ -156,7 +156,7 @@ export default function PrivacyPolicyPage() {
                 <p>
                     If you have any questions about this Privacy Policy or our data practices, please
                     contact us through our <a href="/contact">Contact page</a> or email us at{' '}
-                    <strong>privacy@fillwords.online</strong>.
+                    <strong>privacy@tilechallenge.com</strong>.
                 </p>
             </div>
         </>

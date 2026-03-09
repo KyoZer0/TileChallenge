@@ -4,8 +4,8 @@ import { categories } from '../lib/gameData';
 
 export const metadata: Metadata = {
     title: 'Sitemap – All Pages',
-    description: 'Browse the complete sitemap of FillWords. Find every page on our website including games, blog posts, and information pages.',
-    keywords: ['FillWords sitemap', 'all pages', 'site navigation'],
+    description: 'Browse the complete sitemap of Tile Challenge. Find every page on our website including games, blog posts, and information pages.',
+    keywords: ['Tile Challenge sitemap', 'all pages', 'site navigation'],
 };
 
 const sections = [
@@ -13,7 +13,7 @@ const sections = [
         title: 'Main Pages',
         links: [
             { href: '/', label: 'Home' },
-            { href: '/#game', label: 'Play FillWords' },
+            { href: '/#game', label: 'Play Tile Challenge' },
             { href: '/how-to-play', label: 'How to Play' },
             { href: '/faq', label: 'FAQ' },
         ],
@@ -22,7 +22,7 @@ const sections = [
         title: 'Blog',
         links: [
             { href: '/blog', label: 'Blog Home' },
-            { href: '/blog/what-is-jigsolitaire', label: 'What is FillWords?' },
+            { href: '/blog/what-is-jigsolitaire', label: 'What is Tile Challenge?' },
             { href: '/blog/benefits-of-puzzle-games', label: '7 Brain Benefits of Puzzle Games' },
             { href: '/blog/tips-and-tricks', label: 'Pro Tips & Tricks' },
             { href: '/blog/history-of-puzzle-games', label: 'History of Jigsaw & Solitaire' },
@@ -55,7 +55,7 @@ export default function SitemapPage() {
             <div className="page-header">
                 <div className="container">
                     <h1 className="gradient-text">Sitemap</h1>
-                    <p>Browse every page on FillWords.</p>
+                    <p>Browse every page on Tile Challenge.</p>
                 </div>
             </div>
 
