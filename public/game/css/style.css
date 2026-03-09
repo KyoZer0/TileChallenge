@@ -1,0 +1,333 @@
+/* Reset and Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%; /* Fixes 100vh mobile iframe issues */
+    font-family: 'Fredoka', sans-serif;
+    background: #EBE3D5; /* Cream fallback */
+    overflow: hidden;
+    touch-action: none;
+    margin: 0;
+}
+
+#game-container {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Parallax Background */
+.parallax-bg {
+    position: absolute;
+    /* Overbleed the background by 10% on each side to allow parallax movement without showing edges */
+    top: -10%; left: -10%; 
+    width: 120%; height: 120%;
+    z-index: -1; /* Behind all game content */
+    pointer-events: none;
+}
+
+.parallax-layer {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: background-image 1s ease-in-out, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    filter: blur(6px) brightness(0.85); /* Adds depth of field and contrast */
+    transform: scale(1.05); /* Prevent edges showing when blurred/moving */
+}
+
+/* Header */
+#game-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 25px;
+    color: #5C4E43; /* Warm dark brown */
+    font-size: 1.5rem;
+    font-weight: 700;
+    z-index: 10;
+    align-items: center;
+}
+
+.level-info, .score-info {
+    background-color: #4A2E1B; /* Dark Coffee Brown */
+    color: #FFF;
+    padding: 6px 20px;
+    border-radius: 4px; /* Slight pixel curve */
+    border: 4px solid #EBE3D5; /* Cream border */
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.3); /* Hard pixel shadow */
+    font-family: 'Pixelify Sans', sans-serif;
+    letter-spacing: 2px;
+}
+
+/* Board Area (Tile Stacks) */
+#board-area {
+    flex: 1;
+    position: relative;
+    margin: 10px;
+}
+
+/* Tiles (Cards) */
+.tile {
+    width: clamp(40px, 12vw, 60px);
+    height: clamp(40px, 12vw, 60px);
+    position: absolute;
+    background-color: #FFFFFF; /* Bright white top */
+    border-radius: 12px; /* Smooth square */
+    border: 1px solid #D1C5B4; 
+    
+    /* Inset 2px white gap, 4px vibrant inner border, 6px solid bottom edge for 3D block */
+    box-shadow: inset 0 0 0 2px #FFFFFF, inset 0 0 0 4px #FF7A59, 0 6px 0 #A8704A, 0 8px 6px rgba(0,0,0,0.3); 
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: clamp(28px, 8vw, 34px);
+    cursor: pointer;
+    transition: transform 0.1s ease, box-shadow 0.1s ease, filter 0.2s ease, top 0.3s ease, left 0.3s ease;
+    transform-origin: center bottom;
+}
+
+.tile.blocked {
+    filter: brightness(0.65) contrast(1.1);
+    cursor: not-allowed;
+}
+
+.tile:active:not(.blocked) {
+    transform: translateY(6px); /* Compress the 3D block */
+    box-shadow: inset 0 0 0 2px #FFFFFF, inset 0 0 0 4px #FF7A59, 0 0px 0 #A8704A, 0 2px 2px rgba(0,0,0,0.3); 
+}
+
+.tile.removing {
+    transform: scale(0);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Selection Bar Area */
+#selection-area {
+    height: 120px;
+    padding: 0 10px 20px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    z-index: 20;
+}
+
+#selection-bar {
+    width: 100%;
+    max-width: 500px;
+    height: clamp(65px, 18vw, 90px);
+    background-color: #8C5A35; /* Wood/leather brown tray matching ref */
+    border-radius: 16px;
+    border: 3px solid #633C1F;
+    box-shadow: inset 0 6px 0 rgba(0,0,0,0.2), 0 8px 15px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(2px, 1.5vw, 8px);
+    padding: 0 clamp(5px, 3vw, 15px);
+    padding-top: 6px; /* Offset for inset shadow */
+    position: relative;
+}
+
+.slot {
+    width: clamp(40px, 12vw, 60px);
+    height: clamp(40px, 12vw, 60px);
+    background-color: #EAE3D2; /* Slightly darker cream for empty slot */
+    border-radius: 12px;
+    border: 2px dashed #C4B9AA;
+    box-sizing: border-box;
+}
+
+/* Screen Management */
+.screen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(circle, #EBE3D5 0%, #D1C5B4 100%);
+}
+
+/* Cute decorative elements for Start Screen */
+#start-screen {
+    background-color: #EBE3D5; /* Beige/Parchment */
+    border: 12px solid #4A2E1B;
+    background-image: none;
+}
+
+.game-title {
+    font-size: 5rem; /* Larger for pixel font */
+    color: #4A2E1B;
+    margin-bottom: 5px;
+    font-weight: 700;
+    font-family: 'Pixelify Sans', sans-serif;
+    text-shadow: 4px 4px 0px #D3AD81; /* Coffee/Beige outline */
+}
+
+.subtitle {
+    font-size: 1.8rem;
+    color: #8C5A35; /* Caramel brown */
+    margin-bottom: 50px;
+    font-weight: 600;
+    font-family: 'Pixelify Sans', sans-serif;
+    text-shadow: 2px 2px 0px #EBE3D5;
+}
+
+#btn-play, #modal-action-btn {
+    background-color: #D3AD81; /* Coffee Beige */
+    color: #FFF;
+    border: 6px solid #4A2E1B;
+    padding: 15px 45px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    border-radius: 8px; /* Pixel art rounded rects */
+    cursor: pointer;
+    box-shadow: 0 8px 0 #4A2E1B; /* Solid chunky bottom */
+    transition: transform 0.1s, box-shadow 0.1s;
+    font-family: 'Pixelify Sans', sans-serif;
+    letter-spacing: 2px;
+    text-shadow: 2px 2px 0px #4A2E1B;
+}
+
+#btn-play:active, #modal-action-btn:active {
+    transform: translateY(8px);
+    box-shadow: 0 0px 0 #4A2E1B;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Modals */
+#modal-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(92, 78, 67, 0.4); /* Brown tinted overlay */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.3s;
+    backdrop-filter: blur(2px);
+}
+
+#modal-overlay.hidden {
+    visibility: hidden;
+    opacity: 0;
+}
+
+#modal-content {
+    background: #EBE3D5; /* Parchment beige */
+    padding: 40px 30px;
+    border-radius: 8px; /* Pixel art rigid corners */
+    border: 8px solid #4A2E1B; /* Thick retro stroke */
+    text-align: center;
+    width: 85%;
+    max-width: 350px;
+    box-shadow: 8px 8px 0 rgba(74, 46, 27, 0.4); /* Solid pixel shadow */
+    animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+/* Ribbon/Tag for Modal Title */
+#modal-title {
+    background-color: #D3AD81;
+    color: #FFF;
+    font-size: 2rem;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 4px solid #4A2E1B;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    text-shadow: 2px 2px 0px #4A2E1B;
+}
+
+#modal-message {
+    font-size: 1.5rem;
+    color: #4A2E1B;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+#modal-action-btn {
+    background-color: #8C5A35; /* Caramel/wood brown */
+    width: 100%;
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); opacity: 1; }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); }
+}
+
+/* Particle Effects */
+.particle {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-radius: 5px;
+    pointer-events: none;
+    z-index: 1000;
+    transform: scale(1);
+    opacity: 1;
+    animation: explode 0.6s ease-out forwards;
+    border: 2px solid #4A2E1B;
+    box-shadow: 2px 2px 0 rgba(74, 46, 27, 0.4);
+}
+
+@keyframes explode {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--tx), var(--ty)) scale(0) rotate(180deg);
+        opacity: 0;
+    }
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+    .game-title {
+        font-size: 3.5rem;
+    }
+    .subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+    }
+    #game-header {
+        font-size: 1.2rem;
+        padding: 10px 15px;
+    }
+    .level-info, .score-info {
+        padding: 4px 12px;
+    }
+    #btn-play, #modal-action-btn {
+        padding: 12px 35px;
+        font-size: 1.4rem;
+    }
+}

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=800, user-scalable=no">
+    <title>Tile Challenge</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div id="game-container">
+        <!-- Parallax Background Elements -->
+        <div id="game-background" class="parallax-bg">
+            <div class="parallax-layer parallax-layer-base"></div>
+            <div class="parallax-layer parallax-layer-mid"></div>
+            <div class="parallax-layer parallax-layer-top"></div>
+        </div>
+
+        <!-- Header area for scoring / level info -->
+        <header id="game-header">
+            <div class="level-info">Level <span id="level-display">1</span></div>
+            <div class="score-info">Score: <span id="score-display">0</span></div>
+        </header>
+
+        <!-- Start Screen / Main Menu -->
+        <div id="start-screen" class="screen">
+            <h1 class="game-title">Tile Challenge</h1>
+            <p class="subtitle">A cozy puzzle game</p>
+            <button id="btn-play">Play Now</button>
+        </div>
+
+        <!-- Main Play Area containing the stacked tiles -->
+        <main id="board-area" class="hidden">
+            <!-- Tiles will be dynamically injected here -->
+        </main>
+
+        <!-- The Selection Bar at the bottom (Max 7 slots) -->
+        <footer id="selection-area">
+            <div id="selection-bar">
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+                <div class="slot"></div>
+            </div>
+        </footer>
+
+        <!-- Overlays for Win/Loss -->
+        <div id="modal-overlay" class="hidden">
+            <div id="modal-content">
+                <h2 id="modal-title">You Win!</h2>
+                <p id="modal-message">Great job clearing the board.</p>
+                <button id="modal-action-btn">Next Level</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- We will use Javascript modules to keep the code clean -->
+    <script type="module">
+        // Cache bust using current timestamp to force redownload
+        const version = new Date().getTime();
+        import(`./js/main.js?v=${version}`);
+    </script>
+</body>
+
+</html>
