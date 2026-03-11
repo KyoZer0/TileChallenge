@@ -32,6 +32,7 @@
 
         <!-- Start Screen / Main Menu -->
         <div id="start-screen" class="screen">
+            <button id="achievements-btn" type="button">Achievements</button>
             <h1 class="game-title">Tile Challenge</h1>
             <p class="subtitle">A cozy puzzle game</p>
             <div class="start-stats">
@@ -39,7 +40,11 @@
                 <div class="start-stat"><span>Best Level</span><strong id="start-best-level">1</strong></div>
                 <div class="start-stat"><span>Coins</span><strong id="start-coins">0</strong></div>
             </div>
-            <button id="btn-play">Play Now</button>
+            <div class="start-actions">
+                <button id="btn-play">Play Now</button>
+                <button id="btn-daily" class="secondary-start-btn" type="button">Daily Challenge</button>
+            </div>
+            <p id="daily-status">A fresh seeded board is available today.</p>
         </div>
 
         <!-- Main Play Area containing the stacked tiles -->
@@ -58,6 +63,10 @@
             </button>
             <button class="tool-btn" data-tool="hint" type="button">
                 Hint
+                <span class="tool-count">0</span>
+            </button>
+            <button class="tool-btn" data-tool="clear" type="button">
+                Clear
                 <span class="tool-count">0</span>
             </button>
         </section>
@@ -97,6 +106,30 @@
                 <div class="shop-balance">Coins available: <span id="shop-coins">0</span></div>
                 <p id="shop-message">Pick a tool for the next tough board or dress the cabinet to match your style.</p>
                 <div id="shop-list"></div>
+            </div>
+        </div>
+
+        <div id="achievements-overlay" class="hidden">
+            <div id="achievements-panel">
+                <div class="achievements-head">
+                    <div>
+                        <h2>Achievements</h2>
+                        <p>Track long-term milestones, daily performance, and cosmetic reward unlocks.</p>
+                    </div>
+                    <button id="achievements-close-btn" type="button">Close</button>
+                </div>
+                <div class="daily-summary">
+                    <h3>Daily Summary</h3>
+                    <div class="daily-summary-grid">
+                        <div class="daily-summary-card"><span>Best Score</span><strong id="daily-best-score">0</strong></div>
+                        <div class="daily-summary-card"><span>Fastest Clear</span><strong id="daily-fastest-time">--</strong></div>
+                        <div class="daily-summary-card"><span>Status</span><strong id="daily-complete-state">Open</strong></div>
+                    </div>
+                </div>
+                <div class="badge-panel">
+                    <h3>Badge Shelf</h3>
+                    <div id="badge-list"></div>
+                </div>
             </div>
         </div>
     </div>

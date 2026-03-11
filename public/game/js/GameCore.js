@@ -12,17 +12,26 @@ export class GameCore {
         this.scoreDisplay = document.getElementById('score-display');
         this.coinDisplay = document.getElementById('coin-display');
         this.shopBtn = document.getElementById('shop-btn');
+        this.achievementsBtn = document.getElementById('achievements-btn');
         this.startScreen = document.getElementById('start-screen');
         this.btnPlay = document.getElementById('btn-play');
+        this.btnDaily = document.getElementById('btn-daily');
         this.startBestScore = document.getElementById('start-best-score');
         this.startBestLevel = document.getElementById('start-best-level');
         this.startCoins = document.getElementById('start-coins');
+        this.dailyStatus = document.getElementById('daily-status');
+        this.badgeList = document.getElementById('badge-list');
+        this.dailyBestScore = document.getElementById('daily-best-score');
+        this.dailyFastestTime = document.getElementById('daily-fastest-time');
+        this.dailyCompleteState = document.getElementById('daily-complete-state');
         this.bgLayerBase = document.querySelector('.parallax-layer-base');
         this.shopOverlay = document.getElementById('shop-overlay');
         this.shopList = document.getElementById('shop-list');
         this.shopCloseBtn = document.getElementById('shop-close-btn');
         this.shopCoins = document.getElementById('shop-coins');
         this.shopMessage = document.getElementById('shop-message');
+        this.achievementsOverlay = document.getElementById('achievements-overlay');
+        this.achievementsCloseBtn = document.getElementById('achievements-close-btn');
         this.toolButtons = Array.from(document.querySelectorAll('.tool-btn'));
 
         this.selectionMax = 7;
@@ -35,22 +44,29 @@ export class GameCore {
                 id: 'undo',
                 type: 'utility',
                 name: 'Undo Token',
-                cost: 25,
+                cost: 18,
                 description: 'Rewind your latest unmatched tray move and put the tile back on the board.'
             },
             {
                 id: 'shuffle',
                 type: 'utility',
                 name: 'Shuffle Spark',
-                cost: 35,
+                cost: 28,
                 description: 'Remix the symbols on all remaining board tiles for a fresh puzzle state.'
             },
             {
                 id: 'hint',
                 type: 'utility',
                 name: 'Hint Lantern',
-                cost: 20,
+                cost: 14,
                 description: 'Highlight a promising pair of open matching tiles when the board gets messy.'
+            },
+            {
+                id: 'clear',
+                type: 'utility',
+                name: 'Clear Chisel',
+                cost: 32,
+                description: 'Remove one unmatched tray tile when the run is hanging by a thread.'
             }
         ];
 
@@ -61,7 +77,7 @@ export class GameCore {
                 slot: 'trayTheme',
                 value: 'royal',
                 name: 'Royal Tray',
-                cost: 70,
+                cost: 56,
                 description: 'Turns the tray into a deep burgundy cabinet with golden trim.'
             },
             {
@@ -70,7 +86,7 @@ export class GameCore {
                 slot: 'trayTheme',
                 value: 'mint',
                 name: 'Mint Tray',
-                cost: 70,
+                cost: 56,
                 description: 'A fresh jade tray that makes the board feel lighter and cleaner.'
             },
             {
@@ -79,7 +95,7 @@ export class GameCore {
                 slot: 'tileTheme',
                 value: 'neon',
                 name: 'Neon Tile Frame',
-                cost: 85,
+                cost: 68,
                 description: 'Bright arcade edges and punchy highlights for every tile.'
             },
             {
@@ -88,7 +104,7 @@ export class GameCore {
                 slot: 'tileTheme',
                 value: 'night',
                 name: 'Night Tile Frame',
-                cost: 85,
+                cost: 68,
                 description: 'A cool midnight frame with calmer contrast and icy trim.'
             },
             {
@@ -97,7 +113,7 @@ export class GameCore {
                 slot: 'bgTheme',
                 value: 'sunset',
                 name: 'Sunset Glow',
-                cost: 95,
+                cost: 78,
                 description: 'Warms the whole scene with amber light and a softer parallax mood.'
             },
             {
@@ -106,8 +122,35 @@ export class GameCore {
                 slot: 'bgTheme',
                 value: 'aurora',
                 name: 'Aurora Mood',
-                cost: 95,
+                cost: 78,
                 description: 'Adds a cooler fantasy tint to the background layers and HUD glow.'
+            }
+        ];
+
+        this.rewardCosmetics = [
+            {
+                id: 'reward-tray-ember',
+                type: 'reward',
+                slot: 'trayTheme',
+                value: 'ember',
+                name: 'Ember Tray',
+                description: 'An achievement-only tray with glowing ember trim.'
+            },
+            {
+                id: 'reward-tile-frost',
+                type: 'reward',
+                slot: 'tileTheme',
+                value: 'frost',
+                name: 'Frost Tile Frame',
+                description: 'A pale crystalline frame reserved for serious solvers.'
+            },
+            {
+                id: 'reward-bg-cosmos',
+                type: 'reward',
+                slot: 'bgTheme',
+                value: 'cosmos',
+                name: 'Cosmos Mood',
+                description: 'A starry achievement backdrop with a cooler cosmic haze.'
             }
         ];
 
@@ -122,6 +165,30 @@ export class GameCore {
 
         this.backgrounds = ['assets/Backgrounds/BG1.jpg', 'assets/Backgrounds/BG2.jpg', 'assets/Backgrounds/BG3.jpg'];
 
+        this.badges = [
+            {
+                id: 'badge-level-5',
+                name: 'Tower Scout',
+                description: 'Reach level 5 in endless mode.',
+                cosmeticId: 'reward-tray-ember',
+                check: () => this.progression.stats.totalEndlessLevel >= 5
+            },
+            {
+                id: 'badge-score-500',
+                name: 'Combo Crafter',
+                description: 'Reach a score of 500 in a run.',
+                cosmeticId: 'reward-tile-frost',
+                check: () => this.progression.bestScore >= 500
+            },
+            {
+                id: 'badge-matches-60',
+                name: 'Match Archivist',
+                description: 'Clear 60 sets across all runs.',
+                cosmeticId: 'reward-bg-cosmos',
+                check: () => this.progression.stats.totalMatches >= 60
+            }
+        ];
+
         this.audioContext = null;
         this.tiles = [];
         this.selectedTiles = [];
@@ -131,16 +198,29 @@ export class GameCore {
         this.runCoins = 0;
         this.outcomeResolved = false;
         this.boardInner = null;
+        this.currentMode = 'endless';
+        this.dailyKey = this.getDailyKey();
+        this.dailyRewardClaimedThisRun = false;
+        this.random = Math.random;
+        this.runStartedAt = 0;
 
         this.progression = this.loadProgression();
 
         this.modalBtn.addEventListener('click', () => this.handleModalAction());
         this.btnPlay.addEventListener('click', () => this.startGame());
+        this.btnDaily.addEventListener('click', () => this.startDailyGame());
         this.shopBtn.addEventListener('click', () => this.openShop());
+        this.achievementsBtn.addEventListener('click', () => this.openAchievements());
         this.shopCloseBtn.addEventListener('click', () => this.closeShop());
+        this.achievementsCloseBtn.addEventListener('click', () => this.closeAchievements());
         this.shopOverlay.addEventListener('click', (event) => {
             if (event.target === this.shopOverlay) {
                 this.closeShop();
+            }
+        });
+        this.achievementsOverlay.addEventListener('click', (event) => {
+            if (event.target === this.achievementsOverlay) {
+                this.closeAchievements();
             }
         });
 
@@ -162,28 +242,56 @@ export class GameCore {
         this.updateHud();
     }
 
+    getDailyKey() {
+        return new Date().toISOString().slice(0, 10);
+    }
+
+    createSeededRandom(seedString) {
+        let seed = 0;
+        for (let i = 0; i < seedString.length; i++) {
+            seed = (seed * 31 + seedString.charCodeAt(i)) >>> 0;
+        }
+
+        return () => {
+            seed = (seed * 1664525 + 1013904223) >>> 0;
+            return seed / 4294967296;
+        };
+    }
+
+    getDefaultProgression() {
+        return {
+            coins: 0,
+            bestScore: 0,
+            bestLevel: 1,
+            inventory: {
+                undo: 1,
+                shuffle: 0,
+                hint: 1,
+                clear: 0
+            },
+            cosmetics: {
+                owned: [],
+                equipped: {
+                    trayTheme: 'classic',
+                    tileTheme: 'classic',
+                    bgTheme: 'classic'
+                }
+            },
+            stats: {
+                totalMatches: 0,
+                totalEndlessLevel: 1,
+                dailyCompleted: [],
+                badgesUnlocked: [],
+                dailyRecords: {}
+            }
+        };
+    }
+
     loadProgression() {
         try {
             const raw = window.localStorage.getItem(this.progressionKey);
             if (!raw) {
-                return {
-                    coins: 0,
-                    bestScore: 0,
-                    bestLevel: 1,
-                    inventory: {
-                        undo: 1,
-                        shuffle: 0,
-                        hint: 1
-                    },
-                    cosmetics: {
-                        owned: [],
-                        equipped: {
-                            trayTheme: 'classic',
-                            tileTheme: 'classic',
-                            bgTheme: 'classic'
-                        }
-                    }
-                };
+                return this.getDefaultProgression();
             }
 
             const parsed = JSON.parse(raw);
@@ -194,7 +302,8 @@ export class GameCore {
                 inventory: {
                     undo: parsed.inventory?.undo || 0,
                     shuffle: parsed.inventory?.shuffle || 0,
-                    hint: parsed.inventory?.hint || 0
+                    hint: parsed.inventory?.hint || 0,
+                    clear: parsed.inventory?.clear || 0
                 },
                 cosmetics: {
                     owned: parsed.cosmetics?.owned || [],
@@ -203,27 +312,17 @@ export class GameCore {
                         tileTheme: parsed.cosmetics?.equipped?.tileTheme || 'classic',
                         bgTheme: parsed.cosmetics?.equipped?.bgTheme || 'classic'
                     }
+                },
+                stats: {
+                    totalMatches: parsed.stats?.totalMatches || 0,
+                    totalEndlessLevel: parsed.stats?.totalEndlessLevel || parsed.bestLevel || 1,
+                    dailyCompleted: parsed.stats?.dailyCompleted || [],
+                    badgesUnlocked: parsed.stats?.badgesUnlocked || [],
+                    dailyRecords: parsed.stats?.dailyRecords || {}
                 }
             };
         } catch {
-            return {
-                coins: 0,
-                bestScore: 0,
-                bestLevel: 1,
-                inventory: {
-                    undo: 1,
-                    shuffle: 0,
-                    hint: 1
-                },
-                cosmetics: {
-                    owned: [],
-                    equipped: {
-                        trayTheme: 'classic',
-                        tileTheme: 'classic',
-                        bgTheme: 'classic'
-                    }
-                }
-            };
+            return this.getDefaultProgression();
         }
     }
 
@@ -235,6 +334,12 @@ export class GameCore {
         this.startBestScore.textContent = this.progression.bestScore;
         this.startBestLevel.textContent = this.progression.bestLevel;
         this.startCoins.textContent = this.progression.coins;
+        const dailyComplete = this.progression.stats.dailyCompleted.includes(this.dailyKey);
+        this.dailyStatus.textContent = dailyComplete
+            ? 'Today\'s seeded board is already conquered. Replay it for practice or come back tomorrow for a fresh reward.'
+            : 'A fresh seeded board is available today. Beat it once for a bonus reward and badge progress.';
+        this.renderDailySummary();
+        this.renderBadges();
     }
 
     updateHud() {
@@ -244,6 +349,73 @@ export class GameCore {
         this.shopCoins.textContent = this.progression.coins;
     }
 
+    renderBadges() {
+        this.badgeList.innerHTML = '';
+        this.badges.forEach((badge) => {
+            const unlocked = this.progression.stats.badgesUnlocked.includes(badge.id);
+            const reward = this.rewardCosmetics.find((item) => item.id === badge.cosmeticId);
+            const card = document.createElement('div');
+            card.className = `badge-card${unlocked ? '' : ' locked'}`;
+            card.innerHTML = `
+                <strong>${badge.name}</strong>
+                <span>${badge.description}</span>
+                <span>${unlocked ? `Reward unlocked: ${reward?.name || 'Cosmetic'}` : `Reward: ${reward?.name || 'Cosmetic'}`}</span>
+            `;
+            this.badgeList.appendChild(card);
+        });
+    }
+
+    renderDailySummary() {
+        const dailyRecord = this.progression.stats.dailyRecords[this.dailyKey];
+        this.dailyBestScore.textContent = dailyRecord?.bestScore || 0;
+        this.dailyFastestTime.textContent = dailyRecord?.fastestMs ? this.formatDuration(dailyRecord.fastestMs) : '--';
+        this.dailyCompleteState.textContent = this.progression.stats.dailyCompleted.includes(this.dailyKey) ? 'Cleared' : 'Open';
+    }
+
+    formatDuration(ms) {
+        const totalSeconds = Math.max(1, Math.round(ms / 1000));
+        const minutes = Math.floor(totalSeconds / 60);
+        const seconds = totalSeconds % 60;
+        return `${minutes}:${String(seconds).padStart(2, '0')}`;
+    }
+
+    unlockAchievementRewards() {
+        let unlockedAny = false;
+
+        this.badges.forEach((badge) => {
+            if (this.progression.stats.badgesUnlocked.includes(badge.id) || !badge.check()) {
+                return;
+            }
+
+            this.progression.stats.badgesUnlocked.push(badge.id);
+            if (!this.progression.cosmetics.owned.includes(badge.cosmeticId)) {
+                this.progression.cosmetics.owned.push(badge.cosmeticId);
+            }
+            const reward = this.rewardCosmetics.find((item) => item.id === badge.cosmeticId);
+            if (reward) {
+                this.progression.cosmetics.equipped[reward.slot] = reward.value;
+                this.applyCosmetics();
+            }
+            unlockedAny = true;
+            this.setShopMessage(`${badge.name} unlocked a new cosmetic reward.`);
+        });
+
+        if (unlockedAny) {
+            this.saveProgression();
+            this.renderProgression();
+            this.renderShop();
+        }
+    }
+
+    openAchievements() {
+        this.renderProgression();
+        this.achievementsOverlay.classList.remove('hidden');
+    }
+
+    closeAchievements() {
+        this.achievementsOverlay.classList.add('hidden');
+    }
+
     applyCosmetics() {
         document.body.dataset.trayTheme = this.progression.cosmetics.equipped.trayTheme || 'classic';
         document.body.dataset.tileTheme = this.progression.cosmetics.equipped.tileTheme || 'classic';
@@ -251,11 +423,27 @@ export class GameCore {
     }
 
     startGame() {
+        this.currentMode = 'endless';
         this.startScreen.classList.add('hidden');
         this.boardArea.classList.remove('hidden');
         this.score = 0;
         this.level = 1;
         this.runCoins = 0;
+        this.dailyRewardClaimedThisRun = false;
+        this.runStartedAt = Date.now();
+        this.updateHud();
+        this.startLevel();
+    }
+
+    startDailyGame() {
+        this.currentMode = 'daily';
+        this.startScreen.classList.add('hidden');
+        this.boardArea.classList.remove('hidden');
+        this.score = 0;
+        this.level = 1;
+        this.runCoins = 0;
+        this.dailyRewardClaimedThisRun = this.progression.stats.dailyCompleted.includes(this.dailyKey);
+        this.runStartedAt = Date.now();
         this.updateHud();
         this.startLevel();
     }
@@ -280,6 +468,9 @@ export class GameCore {
         this.hideModal();
         this.closeShop();
         this.applyCosmetics();
+        this.random = this.currentMode === 'daily'
+            ? this.createSeededRandom(`${this.dailyKey}:${this.level}`)
+            : Math.random;
         this.updateBackground();
         this.clearSelectionBar();
 
@@ -323,15 +514,19 @@ export class GameCore {
     updateProgressMilestones() {
         if (this.level > this.progression.bestLevel) {
             this.progression.bestLevel = this.level;
-            this.saveProgression();
-            this.renderProgression();
         }
+        if (this.currentMode === 'endless') {
+            this.progression.stats.totalEndlessLevel = Math.max(this.progression.stats.totalEndlessLevel, this.level);
+        }
+        this.unlockAchievementRewards();
+        this.saveProgression();
+        this.renderProgression();
     }
 
     shuffleArray(items) {
         const copy = [...items];
         for (let i = copy.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
+            const j = Math.floor(this.random() * (i + 1));
             [copy[i], copy[j]] = [copy[j], copy[i]];
         }
         return copy;
@@ -384,11 +579,11 @@ export class GameCore {
             const remaining = totalTiles - tilesPlaced;
             const validShapes = shapes.filter((shape) => shape.length <= remaining);
             const shape = validShapes.length > 0
-                ? validShapes[Math.floor(Math.random() * validShapes.length)]
+                ? validShapes[Math.floor(this.random() * validShapes.length)]
                 : [{ dx: 0, dy: 0, dz: 0 }];
 
-            const ox = (Math.random() < 0.5 ? 0 : 0.5) * (Math.random() < 0.5 ? 1 : -1);
-            const oy = (Math.random() < 0.5 ? 0 : 0.5) * (Math.random() < 0.5 ? 1 : -1);
+            const ox = (this.random() < 0.5 ? 0 : 0.5) * (this.random() < 0.5 ? 1 : -1);
+            const oy = (this.random() < 0.5 ? 0 : 0.5) * (this.random() < 0.5 ? 1 : -1);
 
             let maxZ = -1;
             let overlaps = false;
@@ -601,6 +796,10 @@ export class GameCore {
         const comboBonus = chain * 10;
         this.addScore(this.pointsPerMatch + comboBonus);
         this.awardCoins(4 + chain, 'matching tiles');
+        this.progression.stats.totalMatches += 1;
+        this.saveProgression();
+        this.renderProgression();
+        this.unlockAchievementRewards();
         this.playMatchSfx();
 
         matchedTiles.forEach((tile) => {
@@ -633,7 +832,34 @@ export class GameCore {
 
     showWinModal() {
         this.updateProgressMilestones();
-        const bonusCoins = 10 + (this.level * 2);
+        if (this.currentMode === 'daily') {
+            const alreadyClaimed = this.progression.stats.dailyCompleted.includes(this.dailyKey);
+            const dailyDuration = Date.now() - this.runStartedAt;
+            const existingDailyRecord = this.progression.stats.dailyRecords[this.dailyKey] || {};
+            this.progression.stats.dailyRecords[this.dailyKey] = {
+                bestScore: Math.max(existingDailyRecord.bestScore || 0, this.score),
+                fastestMs: existingDailyRecord.fastestMs ? Math.min(existingDailyRecord.fastestMs, dailyDuration) : dailyDuration
+            };
+            const dailyBonus = alreadyClaimed ? 0 : 40;
+            if (!alreadyClaimed) {
+                this.progression.stats.dailyCompleted.push(this.dailyKey);
+                this.awardCoins(dailyBonus, 'daily challenge clear');
+                this.saveProgression();
+                this.renderProgression();
+            }
+            this.playWinSfx();
+            this.modalTitle.textContent = 'Daily Cleared!';
+            this.modalTitle.style.color = '#4CAF50';
+            this.modalMessage.textContent = alreadyClaimed
+                ? `You solved today's board again. Score ${this.score} · Best time ${this.formatDuration(this.progression.stats.dailyRecords[this.dailyKey].fastestMs)}.`
+                : `Daily board cleared. Score ${this.score} · +${dailyBonus} bonus coins · Best time ${this.formatDuration(this.progression.stats.dailyRecords[this.dailyKey].fastestMs)}.`;
+            this.modalBtn.textContent = 'Back to Menu';
+            this.modalBtn.dataset.action = 'menu';
+            this.modalOverlay.classList.remove('hidden');
+            return;
+        }
+
+        const bonusCoins = 8 + (this.level * 2);
         this.awardCoins(bonusCoins, `clearing level ${this.level}`);
         this.playWinSfx();
         this.modalTitle.textContent = 'Level Clear!';
@@ -645,7 +871,18 @@ export class GameCore {
     }
 
     showLoseModal() {
-        const pityCoins = Math.max(3, Math.floor(this.level / 2) + 2);
+        if (this.currentMode === 'daily') {
+            this.playLoseSfx();
+            this.modalTitle.textContent = 'Daily Miss';
+            this.modalTitle.style.color = '#F44336';
+            this.modalMessage.textContent = `Today's seeded board stays the same until tomorrow. Retry it and chase the bonus clear.`;
+            this.modalBtn.textContent = 'Retry Daily';
+            this.modalBtn.dataset.action = 'retry-daily';
+            this.modalOverlay.classList.remove('hidden');
+            return;
+        }
+
+        const pityCoins = Math.max(2, Math.floor(this.level / 2) + 1);
         this.awardCoins(pityCoins, 'making a deep run');
         this.playLoseSfx();
         this.modalTitle.textContent = 'Game Over';
@@ -664,6 +901,14 @@ export class GameCore {
         if (this.modalBtn.dataset.action === 'next') {
             this.level += 1;
             this.startLevel();
+        } else if (this.modalBtn.dataset.action === 'retry-daily') {
+            this.startDailyGame();
+        } else if (this.modalBtn.dataset.action === 'menu') {
+            this.hideModal();
+            this.startScreen.classList.remove('hidden');
+            this.boardArea.classList.add('hidden');
+            this.currentMode = 'endless';
+            this.renderProgression();
         } else {
             this.startGame();
         }
@@ -808,6 +1053,9 @@ export class GameCore {
             if (tool === 'hint') {
                 disabled = disabled || this.findHintPair().length < 2;
             }
+            if (tool === 'clear') {
+                disabled = disabled || this.selectedTiles.length === 0;
+            }
 
             button.disabled = disabled;
         });
@@ -835,6 +1083,9 @@ export class GameCore {
         }
         if (tool === 'hint') {
             this.useHint();
+        }
+        if (tool === 'clear') {
+            this.useClearTray();
         }
     }
 
@@ -916,6 +1167,20 @@ export class GameCore {
 
         this.setShopMessage('Hint Lantern used. A promising open pair is glowing now.');
         this.updateToolButtons();
+    }
+
+    useClearTray() {
+        if (this.selectedTiles.length === 0 || !this.consumeTool('clear')) return;
+
+        const tile = this.selectedTiles.pop();
+        tile.state = 'matched';
+        tile.element.classList.add('removing');
+        this.createParticles(tile.element);
+        window.setTimeout(() => tile.element.remove(), 300);
+        this.renderSelectionBar();
+        this.updateToolButtons();
+        this.setShopMessage('Clear Chisel used. One tray tile has been removed.');
+        window.setTimeout(() => this.checkGameState(), 260);
     }
 
     updateBackground() {

@@ -67,6 +67,31 @@ body[data-bg-theme='aurora'] #game-header {
     text-shadow: 0 0 14px rgba(117, 232, 214, 0.28);
 }
 
+body[data-tray-theme='ember'] #selection-bar {
+    background: linear-gradient(180deg, #7b2f1a, #47160f);
+    border-color: #ffca7a;
+    box-shadow: inset 0 6px 0 rgba(255,255,255,0.12), 0 8px 15px rgba(0,0,0,0.28), 0 0 18px rgba(255, 120, 58, 0.25);
+}
+
+body[data-tray-theme='ember'] .slot {
+    background: rgba(255, 240, 219, 0.22);
+    border-color: rgba(255, 202, 122, 0.7);
+}
+
+body[data-tile-theme='frost'] .tile {
+    background: linear-gradient(180deg, #f7fcff, #dff2ff);
+    border-color: #9bd7ff;
+    box-shadow: inset 0 0 0 2px #FFFFFF, inset 0 0 0 4px #8de3ff, 0 6px 0 #4b79a7, 0 8px 14px rgba(58, 118, 180, 0.3);
+}
+
+body[data-bg-theme='cosmos'] .parallax-layer-base {
+    filter: blur(6px) saturate(1.5) hue-rotate(95deg) brightness(0.82);
+}
+
+body[data-bg-theme='cosmos'] #game-header {
+    text-shadow: 0 0 14px rgba(164, 129, 255, 0.35);
+}
+
 #game-container {
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -308,6 +333,25 @@ body[data-bg-theme='aurora'] #game-header {
     background-image: none;
 }
 
+#achievements-btn {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: #F5EFEB;
+    color: #4A2E1B;
+    border: 4px solid #4A2E1B;
+    border-radius: 8px;
+    padding: 10px 14px;
+    box-shadow: 0 5px 0 #4A2E1B;
+    font-family: 'Pixelify Sans', sans-serif;
+    cursor: pointer;
+}
+
+#achievements-btn:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 #4A2E1B;
+}
+
 .game-title {
     font-size: 5rem; /* Larger for pixel font */
     color: #4A2E1B;
@@ -332,6 +376,86 @@ body[data-bg-theme='aurora'] #game-header {
     margin-bottom: 36px;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.start-actions {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.secondary-start-btn {
+    background: #F5EFEB;
+    color: #4A2E1B;
+    border: 6px solid #4A2E1B;
+    padding: 15px 32px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 8px 0 #4A2E1B;
+    font-family: 'Pixelify Sans', sans-serif;
+}
+
+.secondary-start-btn:active {
+    transform: translateY(8px);
+    box-shadow: 0 0 0 #4A2E1B;
+}
+
+#daily-status {
+    color: #6A5543;
+    margin-bottom: 18px;
+    text-align: center;
+    max-width: 620px;
+    line-height: 1.5;
+}
+
+.badge-panel {
+    background: rgba(245, 239, 235, 0.9);
+    border: 4px solid #4A2E1B;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 4px 4px 0 rgba(74, 46, 27, 0.28);
+}
+
+.badge-panel h3 {
+    color: #4A2E1B;
+    margin-bottom: 12px;
+    font-size: 1.4rem;
+}
+
+#badge-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+}
+
+.badge-card {
+    padding: 12px;
+    border-radius: 10px;
+    border: 3px solid #4A2E1B;
+    background: #fff8ef;
+    color: #4A2E1B;
+}
+
+.badge-card.locked {
+    opacity: 0.55;
+    filter: grayscale(0.35);
+}
+
+.badge-card strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.badge-card span {
+    display: block;
+    color: #7a6554;
+    font-size: 0.85rem;
+    line-height: 1.4;
 }
 
 .start-stat {
@@ -405,6 +529,97 @@ body[data-bg-theme='aurora'] #game-header {
     justify-content: center;
     z-index: 110;
     backdrop-filter: blur(3px);
+}
+
+#achievements-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(40, 28, 20, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 115;
+    backdrop-filter: blur(3px);
+}
+
+#achievements-panel {
+    width: min(92%, 760px);
+    max-height: 80vh;
+    overflow: auto;
+    background: #EBE3D5;
+    border: 8px solid #4A2E1B;
+    border-radius: 14px;
+    box-shadow: 8px 8px 0 rgba(74, 46, 27, 0.4);
+    padding: 24px;
+    display: grid;
+    gap: 18px;
+}
+
+.achievements-head {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-start;
+}
+
+.achievements-head h2 {
+    color: #4A2E1B;
+    font-size: 2rem;
+    margin-bottom: 6px;
+}
+
+.achievements-head p,
+.daily-summary-card span {
+    color: #6A5543;
+}
+
+#achievements-close-btn {
+    background: #8C5A35;
+    color: #FFF;
+    border: 4px solid #4A2E1B;
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-family: 'Pixelify Sans', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #4A2E1B;
+}
+
+#achievements-close-btn:active {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 #4A2E1B;
+}
+
+.daily-summary {
+    background: #F5EFEB;
+    border: 4px solid #4A2E1B;
+    border-radius: 12px;
+    padding: 18px;
+    box-shadow: 4px 4px 0 rgba(74, 46, 27, 0.25);
+}
+
+.daily-summary h3 {
+    color: #4A2E1B;
+    margin-bottom: 12px;
+}
+
+.daily-summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+}
+
+.daily-summary-card {
+    background: #fff8ef;
+    border: 3px solid #4A2E1B;
+    border-radius: 10px;
+    padding: 12px;
+}
+
+.daily-summary-card strong {
+    display: block;
+    color: #4A2E1B;
+    font-size: 1.3rem;
+    margin-top: 6px;
 }
 
 #shop-panel {
@@ -627,9 +842,28 @@ body[data-bg-theme='aurora'] #game-header {
     .start-stats {
         gap: 10px;
     }
+    .start-actions {
+        flex-direction: column;
+    }
+    #achievements-btn {
+        top: 12px;
+        right: 12px;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    .secondary-start-btn {
+        width: 100%;
+        max-width: 280px;
+    }
     .start-stat {
         min-width: 100px;
         padding: 10px 12px;
+    }
+    #badge-list {
+        grid-template-columns: 1fr;
+    }
+    .achievements-head {
+        flex-direction: column;
     }
     #toolbelt {
         gap: 8px;
