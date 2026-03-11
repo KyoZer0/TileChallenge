@@ -11,6 +11,8 @@ export class GameCore {
         this.levelDisplay = document.getElementById('level-display');
         this.scoreDisplay = document.getElementById('score-display');
         this.coinDisplay = document.getElementById('coin-display');
+        this.comboMeter = document.getElementById('combo-meter');
+        this.comboLabel = document.getElementById('combo-label');
         this.shopBtn = document.getElementById('shop-btn');
         this.achievementsBtn = document.getElementById('achievements-btn');
         this.startScreen = document.getElementById('start-screen');
@@ -32,6 +34,7 @@ export class GameCore {
         this.shopMessage = document.getElementById('shop-message');
         this.achievementsOverlay = document.getElementById('achievements-overlay');
         this.achievementsCloseBtn = document.getElementById('achievements-close-btn');
+        this.rewardFxLayer = document.getElementById('reward-fx-layer');
         this.toolButtons = Array.from(document.querySelectorAll('.tool-btn'));
 
         this.selectionMax = 7;
@@ -189,6 +192,11 @@ export class GameCore {
             }
         ];
 
+        this.comboPraise = ['Nice!', 'Good job!', 'Well done!', 'Sweet!', 'Great clear!', 'Lovely!'];
+        this.winPraise = ['Brilliant!', 'Cozy clear!', 'Fantastic!', 'Board smashed!', 'You nailed it!'];
+        this.lossPraise = ['Almost!', 'So close!', 'One more run!', 'You had it!', 'Nearly there!'];
+        this.dailyPraise = ['Daily conquered!', 'Sharp work!', 'Today is yours!', 'Clean sweep!'];
+
         this.audioContext = null;
         this.tiles = [];
         this.selectedTiles = [];
@@ -203,23 +211,47 @@ export class GameCore {
         this.dailyRewardClaimedThisRun = false;
         this.random = Math.random;
         this.runStartedAt = 0;
+        this.comboChain = 0;
 
         this.progression = this.loadProgression();
 
-        this.modalBtn.addEventListener('click', () => this.handleModalAction());
-        this.btnPlay.addEventListener('click', () => this.startGame());
-        this.btnDaily.addEventListener('click', () => this.startDailyGame());
-        this.shopBtn.addEventListener('click', () => this.openShop());
-        this.achievementsBtn.addEventListener('click', () => this.openAchievements());
-        this.shopCloseBtn.addEventListener('click', () => this.closeShop());
-        this.achievementsCloseBtn.addEventListener('click', () => this.closeAchievements());
+        this.modalBtn.addEventListener('click', () => {
+            this.playUiClickSfx();
+            this.handleModalAction();
+        });
+        this.btnPlay.addEventListener('click', () => {
+            this.playUiClickSfx();
+            this.startGame();
+        });
+        this.btnDaily.addEventListener('click', () => {
+            this.playUiClickSfx();
+            this.startDailyGame();
+        });
+        this.shopBtn.addEventListener('click', () => {
+            this.playUiClickSfx();
+            this.openShop();
+        });
+        this.achievementsBtn.addEventListener('click', () => {
+            this.playUiClickSfx();
+            this.openAchievements();
+        });
+        this.shopCloseBtn.addEventListener('click', () => {
+            this.playSoftCloseSfx();
+            this.closeShop();
+        });
+        this.achievementsCloseBtn.addEventListener('click', () => {
+            this.playSoftCloseSfx();
+            this.closeAchievements();
+        });
         this.shopOverlay.addEventListener('click', (event) => {
             if (event.target === this.shopOverlay) {
+                this.playSoftCloseSfx();
                 this.closeShop();
             }
         });
         this.achievementsOverlay.addEventListener('click', (event) => {
             if (event.target === this.achievementsOverlay) {
+                this.playSoftCloseSfx();
                 this.closeAchievements();
             }
         });
@@ -379,6 +411,127 @@ export class GameCore {
         return `${minutes}:${String(seconds).padStart(2, '0')}`;
     }
 
+    pickRandom(items) {
+        return items[Math.floor(Math.random() * items.length)];
+    }
+
+    animateElementIn(element, options = {}) {
+        if (window.gsap) {
+            window.gsap.fromTo(element, options.from || {}, options.to || {});
+            return;
+        }
+
+        if (options.fallback) {
+            options.fallback();
+        }
+    }
+
+    showComboMeter(chain) {
+        if (chain <= 0) {
+            this.comboMeter.classList.add('hidden');
+            return;
+        }
+
+        this.comboMeter.classList.remove('hidden');
+        this.comboLabel.textContent = `Combo x${chain + 1}`;
+        this.animateElementIn(this.comboMeter, {
+            from: { scale: 0.6, y: -20, opacity: 0 },
+            to: { scale: 1, y: 0, opacity: 1, duration: 0.35, ease: 'back.out(1.7)' },
+            fallback: () => {
+                this.comboMeter.style.opacity = '1';
+            }
+        });
+    }
+
+    hideComboMeterSoon() {
+        if (window.gsap) {
+            window.gsap.to(this.comboMeter, {
+                opacity: 0,
+                y: -16,
+                delay: 0.5,
+                duration: 0.3,
+                onComplete: () => {
+                    this.comboMeter.classList.add('hidden');
+                    this.comboMeter.style.opacity = '';
+                    this.comboMeter.style.transform = '';
+                }
+            });
+            return;
+        }
+
+        window.setTimeout(() => this.comboMeter.classList.add('hidden'), 800);
+    }
+
+    showFloatingReward(text, targetElement) {
+        const node = document.createElement('div');
+        node.className = 'reward-float';
+        node.textContent = text;
+
+        const rect = targetElement.getBoundingClientRect();
+        const parentRect = this.rewardFxLayer.getBoundingClientRect();
+        node.style.left = `${rect.left - parentRect.left + rect.width / 2 - 40}px`;
+        node.style.top = `${rect.top - parentRect.top - 8}px`;
+        this.rewardFxLayer.appendChild(node);
+
+        this.animateElementIn(node, {
+            from: { y: 18, scale: 0.8, opacity: 0, rotation: -4 },
+            to: {
+                y: -42,
+                scale: 1,
+                opacity: 1,
+                rotation: 0,
+                duration: 0.45,
+                ease: 'back.out(1.6)',
+                onComplete: () => {
+                    if (window.gsap) {
+                        window.gsap.to(node, {
+                            opacity: 0,
+                            y: -64,
+                            duration: 0.35,
+                            delay: 0.25,
+                            onComplete: () => node.remove()
+                        });
+                    } else {
+                        window.setTimeout(() => node.remove(), 700);
+                    }
+                }
+            },
+            fallback: () => {
+                window.setTimeout(() => node.remove(), 700);
+            }
+        });
+    }
+
+    getCosmeticById(itemId) {
+        return [...this.cosmeticItems, ...this.rewardCosmetics].find((entry) => entry.id === itemId);
+    }
+
+    getPreviewMarkup(item) {
+        if (item.type === 'utility') {
+            const utilityIcons = {
+                undo: ['↩', '🍒'],
+                shuffle: ['🔀', '🍋'],
+                hint: ['💡', '🍓'],
+                clear: ['✨', '🍇']
+            };
+            const icons = utilityIcons[item.id] || ['⭐', '🍒'];
+            return `
+                <div class="shop-preview utility-preview">
+                    <div class="preview-mini-tile">${icons[1]}</div>
+                    <div class="preview-mini-tile">${icons[0]}</div>
+                    <span class="preview-chip">utility</span>
+                </div>
+            `;
+        }
+
+        return `
+            <div class="shop-preview">
+                <div class="preview-${item.slot === 'trayTheme' ? 'tray' : item.slot === 'tileTheme' ? 'tile' : 'bg'}-${item.value}"></div>
+                <span class="preview-chip">preview</span>
+            </div>
+        `;
+    }
+
     unlockAchievementRewards() {
         let unlockedAny = false;
 
@@ -398,6 +551,7 @@ export class GameCore {
             }
             unlockedAny = true;
             this.setShopMessage(`${badge.name} unlocked a new cosmetic reward.`);
+            this.playBadgeSfx();
         });
 
         if (unlockedAny) {
@@ -465,6 +619,8 @@ export class GameCore {
         this.selectedTiles = [];
         this.moveHistory = [];
         this.outcomeResolved = false;
+        this.comboChain = 0;
+        this.comboMeter.classList.add('hidden');
         this.hideModal();
         this.closeShop();
         this.applyCosmetics();
@@ -788,12 +944,15 @@ export class GameCore {
         const matchIndex = this.findMatchIndex();
 
         if (matchIndex === -1) {
+            this.hideComboMeterSoon();
             window.setTimeout(() => this.checkGameState(), 250);
             return;
         }
 
         const matchedTiles = this.selectedTiles.splice(matchIndex, this.matchSize);
         const comboBonus = chain * 10;
+        this.comboChain = chain + 1;
+        this.showComboMeter(chain);
         this.addScore(this.pointsPerMatch + comboBonus);
         this.awardCoins(4 + chain, 'matching tiles');
         this.progression.stats.totalMatches += 1;
@@ -801,6 +960,12 @@ export class GameCore {
         this.renderProgression();
         this.unlockAchievementRewards();
         this.playMatchSfx();
+        if (matchedTiles[0]?.element) {
+            const rewardText = chain > 0
+                ? `${this.pickRandom(this.comboPraise)} +${this.pointsPerMatch + comboBonus}`
+                : `+${this.pointsPerMatch + comboBonus}`;
+            this.showFloatingReward(rewardText, matchedTiles[0].element);
+        }
 
         matchedTiles.forEach((tile) => {
             tile.state = 'matched';
@@ -850,9 +1015,10 @@ export class GameCore {
             this.playWinSfx();
             this.modalTitle.textContent = 'Daily Cleared!';
             this.modalTitle.style.color = '#4CAF50';
+            const praise = this.pickRandom(this.dailyPraise);
             this.modalMessage.textContent = alreadyClaimed
-                ? `You solved today's board again. Score ${this.score} · Best time ${this.formatDuration(this.progression.stats.dailyRecords[this.dailyKey].fastestMs)}.`
-                : `Daily board cleared. Score ${this.score} · +${dailyBonus} bonus coins · Best time ${this.formatDuration(this.progression.stats.dailyRecords[this.dailyKey].fastestMs)}.`;
+                ? `${praise} Score ${this.score} · Best time ${this.formatDuration(this.progression.stats.dailyRecords[this.dailyKey].fastestMs)}.`
+                : `${praise} Score ${this.score} · +${dailyBonus} bonus coins · Best time ${this.formatDuration(this.progression.stats.dailyRecords[this.dailyKey].fastestMs)}.`;
             this.modalBtn.textContent = 'Back to Menu';
             this.modalBtn.dataset.action = 'menu';
             this.modalOverlay.classList.remove('hidden');
@@ -864,7 +1030,7 @@ export class GameCore {
         this.playWinSfx();
         this.modalTitle.textContent = 'Level Clear!';
         this.modalTitle.style.color = '#4CAF50';
-        this.modalMessage.textContent = `Score ${this.score} · +${bonusCoins} level coins · Run coins ${this.runCoins}. Ready for the next tower?`;
+        this.modalMessage.textContent = `${this.pickRandom(this.winPraise)} Score ${this.score} · +${bonusCoins} level coins · Run coins ${this.runCoins}. Ready for the next tower?`;
         this.modalBtn.textContent = 'Next Level';
         this.modalBtn.dataset.action = 'next';
         this.modalOverlay.classList.remove('hidden');
@@ -875,7 +1041,7 @@ export class GameCore {
             this.playLoseSfx();
             this.modalTitle.textContent = 'Daily Miss';
             this.modalTitle.style.color = '#F44336';
-            this.modalMessage.textContent = `Today's seeded board stays the same until tomorrow. Retry it and chase the bonus clear.`;
+            this.modalMessage.textContent = `${this.pickRandom(this.lossPraise)} Today's seeded board stays the same until tomorrow. Retry it and chase the bonus clear.`;
             this.modalBtn.textContent = 'Retry Daily';
             this.modalBtn.dataset.action = 'retry-daily';
             this.modalOverlay.classList.remove('hidden');
@@ -887,7 +1053,7 @@ export class GameCore {
         this.playLoseSfx();
         this.modalTitle.textContent = 'Game Over';
         this.modalTitle.style.color = '#F44336';
-        this.modalMessage.textContent = `Level ${this.level} · Score ${this.score} · +${pityCoins} retry coins. Visit the shop or jump right back in.`;
+        this.modalMessage.textContent = `${this.pickRandom(this.lossPraise)} Level ${this.level} · Score ${this.score} · +${pityCoins} retry coins. Visit the shop or jump right back in.`;
         this.modalBtn.textContent = 'Try Again';
         this.modalBtn.dataset.action = 'restart';
         this.modalOverlay.classList.remove('hidden');
@@ -946,6 +1112,7 @@ export class GameCore {
         items.forEach((item) => {
             const card = document.createElement('div');
             card.className = 'shop-card';
+            card.innerHTML = this.getPreviewMarkup(item);
 
             const titleNode = document.createElement('h4');
             titleNode.textContent = item.name;
@@ -971,8 +1138,9 @@ export class GameCore {
                 meta.innerHTML = `<span>${item.cost} coins</span><span>${equipped ? 'Equipped' : owned ? 'Owned' : 'Locked'}</span>`;
 
                 if (equipped) {
-                    button.textContent = 'Equipped';
-                    button.disabled = true;
+                    button.textContent = 'Unequip';
+                    button.disabled = false;
+                    button.addEventListener('click', () => this.unequipCosmetic(item.id));
                 } else if (owned) {
                     button.textContent = 'Equip';
                     button.disabled = false;
@@ -1007,6 +1175,7 @@ export class GameCore {
         const item = [...this.shopItems, ...this.cosmeticItems].find((entry) => entry.id === itemId);
         if (!item || this.progression.coins < item.cost) return;
 
+        this.playPurchaseSfx();
         this.progression.coins -= item.cost;
         if (item.type === 'utility') {
             this.progression.inventory[itemId] += 1;
@@ -1024,14 +1193,27 @@ export class GameCore {
     }
 
     equipCosmetic(itemId) {
-        const item = this.cosmeticItems.find((entry) => entry.id === itemId);
+        const item = this.getCosmeticById(itemId);
         if (!item || !this.ownsCosmetic(itemId)) return;
 
+        this.playEquipSfx();
         this.progression.cosmetics.equipped[item.slot] = item.value;
         this.applyCosmetics();
         this.saveProgression();
         this.renderShop();
         this.setShopMessage(`Equipped ${item.name}.`);
+    }
+
+    unequipCosmetic(itemId) {
+        const item = this.getCosmeticById(itemId);
+        if (!item) return;
+
+        this.playSoftCloseSfx();
+        this.progression.cosmetics.equipped[item.slot] = 'classic';
+        this.applyCosmetics();
+        this.saveProgression();
+        this.renderShop();
+        this.setShopMessage(`${item.name} unequipped.`);
     }
 
     updateToolButtons() {
@@ -1111,6 +1293,7 @@ export class GameCore {
             this.renderSelectionBar();
             this.centerBoard();
             this.updateToolButtons();
+            this.playUtilitySfx('undo');
             this.setShopMessage('Undo used. One tray move has been rewound.');
             return;
         }
@@ -1124,6 +1307,7 @@ export class GameCore {
         const boardTiles = this.tiles.filter((tile) => tile.state === 'board');
         if (boardTiles.length < 2 || !this.consumeTool('shuffle')) return;
 
+        this.playUtilitySfx('shuffle');
         const shuffledTypes = this.shuffleArray(boardTiles.map((tile) => tile.type));
         boardTiles.forEach((tile, index) => {
             tile.type = shuffledTypes[index];
@@ -1160,6 +1344,7 @@ export class GameCore {
         const pair = this.findHintPair();
         if (pair.length < 2 || !this.consumeTool('hint')) return;
 
+        this.playUtilitySfx('hint');
         pair.forEach((tile) => {
             tile.element.classList.add('hint-glow');
             window.setTimeout(() => tile.element.classList.remove('hint-glow'), 1400);
@@ -1172,6 +1357,7 @@ export class GameCore {
     useClearTray() {
         if (this.selectedTiles.length === 0 || !this.consumeTool('clear')) return;
 
+        this.playUtilitySfx('clear');
         const tile = this.selectedTiles.pop();
         tile.state = 'matched';
         tile.element.classList.add('removing');
@@ -1235,21 +1421,95 @@ export class GameCore {
         return this.audioContext;
     }
 
+    playTone(ctx, { type = 'sine', frequency = 440, start = 0, duration = 0.12, gain = 0.04, slideTo = null }) {
+        const osc = ctx.createOscillator();
+        const amp = ctx.createGain();
+        osc.connect(amp);
+        amp.connect(ctx.destination);
+        osc.type = type;
+        osc.frequency.setValueAtTime(frequency, ctx.currentTime + start);
+        if (slideTo) {
+            osc.frequency.exponentialRampToValueAtTime(slideTo, ctx.currentTime + start + duration);
+        }
+        amp.gain.setValueAtTime(gain, ctx.currentTime + start);
+        amp.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + start + duration);
+        osc.start(ctx.currentTime + start);
+        osc.stop(ctx.currentTime + start + duration);
+    }
+
+    playUiClickSfx() {
+        try {
+            const ctx = this.getAudioContext();
+            if (!ctx) return;
+            this.playTone(ctx, { type: 'triangle', frequency: 540, duration: 0.05, gain: 0.035, slideTo: 720 });
+            this.playTone(ctx, { type: 'sine', frequency: 760, start: 0.02, duration: 0.04, gain: 0.02, slideTo: 920 });
+        } catch {
+        }
+    }
+
+    playSoftCloseSfx() {
+        try {
+            const ctx = this.getAudioContext();
+            if (!ctx) return;
+            this.playTone(ctx, { type: 'sine', frequency: 420, duration: 0.08, gain: 0.025, slideTo: 240 });
+        } catch {
+        }
+    }
+
+    playPurchaseSfx() {
+        try {
+            const ctx = this.getAudioContext();
+            if (!ctx) return;
+            this.playTone(ctx, { type: 'triangle', frequency: 600, duration: 0.06, gain: 0.03, slideTo: 760 });
+            this.playTone(ctx, { type: 'sine', frequency: 900, start: 0.04, duration: 0.09, gain: 0.025, slideTo: 1200 });
+        } catch {
+        }
+    }
+
+    playEquipSfx() {
+        try {
+            const ctx = this.getAudioContext();
+            if (!ctx) return;
+            this.playTone(ctx, { type: 'triangle', frequency: 480, duration: 0.06, gain: 0.03, slideTo: 720 });
+            this.playTone(ctx, { type: 'triangle', frequency: 720, start: 0.05, duration: 0.08, gain: 0.025, slideTo: 960 });
+        } catch {
+        }
+    }
+
+    playBadgeSfx() {
+        try {
+            const ctx = this.getAudioContext();
+            if (!ctx) return;
+            [660, 880, 1174].forEach((freq, index) => {
+                this.playTone(ctx, { type: 'triangle', frequency: freq, start: index * 0.05, duration: 0.12, gain: 0.028, slideTo: freq * 1.08 });
+            });
+        } catch {
+        }
+    }
+
+    playUtilitySfx(tool) {
+        try {
+            const ctx = this.getAudioContext();
+            if (!ctx) return;
+            const configs = {
+                undo: [{ frequency: 520, slideTo: 300 }, { frequency: 390, start: 0.05, slideTo: 260 }],
+                shuffle: [{ frequency: 430, slideTo: 640 }, { frequency: 660, start: 0.04, slideTo: 820 }],
+                hint: [{ frequency: 720, slideTo: 980 }, { frequency: 980, start: 0.03, slideTo: 1240 }],
+                clear: [{ frequency: 340, slideTo: 250 }, { frequency: 510, start: 0.05, slideTo: 430 }]
+            };
+            (configs[tool] || []).forEach((config) => {
+                this.playTone(ctx, { type: 'triangle', duration: 0.09, gain: 0.026, ...config });
+            });
+        } catch {
+        }
+    }
+
     playMatchSfx() {
         try {
             const ctx = this.getAudioContext();
             if (!ctx) return;
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(800, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.1);
-            gain.gain.setValueAtTime(0.1, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.1);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.1);
+            this.playTone(ctx, { type: 'triangle', frequency: 660, duration: 0.08, gain: 0.035, slideTo: 820 });
+            this.playTone(ctx, { type: 'sine', frequency: 980, start: 0.04, duration: 0.11, gain: 0.026, slideTo: 1240 });
         } catch {
         }
     }
@@ -1258,17 +1518,8 @@ export class GameCore {
         try {
             const ctx = this.getAudioContext();
             if (!ctx) return;
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(400, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(300, ctx.currentTime + 0.05);
-            gain.gain.setValueAtTime(0.05, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.05);
+            this.playTone(ctx, { type: 'triangle', frequency: 440, duration: 0.05, gain: 0.03, slideTo: 360 });
+            this.playTone(ctx, { type: 'sine', frequency: 640, start: 0.015, duration: 0.035, gain: 0.016, slideTo: 680 });
         } catch {
         }
     }
@@ -1277,21 +1528,10 @@ export class GameCore {
         try {
             const ctx = this.getAudioContext();
             if (!ctx) return;
-            const freqs = [523.25, 659.25, 783.99, 1046.5];
-            const startTime = ctx.currentTime;
-
-            freqs.forEach((freq, index) => {
-                const osc = ctx.createOscillator();
-                const gain = ctx.createGain();
-                osc.connect(gain);
-                gain.connect(ctx.destination);
-                osc.type = 'square';
-                osc.frequency.value = freq;
-                gain.gain.setValueAtTime(0.02, startTime + index * 0.1);
-                gain.gain.setTargetAtTime(0, startTime + index * 0.1 + 0.05, 0.02);
-                osc.start(startTime + index * 0.1);
-                osc.stop(startTime + index * 0.1 + 0.2);
+            [523.25, 659.25, 783.99, 987.77].forEach((freq, index) => {
+                this.playTone(ctx, { type: 'triangle', frequency: freq, start: index * 0.08, duration: 0.16, gain: 0.025, slideTo: freq * 1.05 });
             });
+            this.playTone(ctx, { type: 'sine', frequency: 1318.5, start: 0.28, duration: 0.22, gain: 0.02, slideTo: 1567.98 });
         } catch {
         }
     }
@@ -1300,17 +1540,8 @@ export class GameCore {
         try {
             const ctx = this.getAudioContext();
             if (!ctx) return;
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            osc.type = 'sawtooth';
-            osc.frequency.setValueAtTime(300, ctx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.5);
-            gain.gain.setValueAtTime(0.05, ctx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
-            osc.start();
-            osc.stop(ctx.currentTime + 0.5);
+            this.playTone(ctx, { type: 'triangle', frequency: 320, duration: 0.14, gain: 0.025, slideTo: 220 });
+            this.playTone(ctx, { type: 'sine', frequency: 220, start: 0.08, duration: 0.18, gain: 0.02, slideTo: 160 });
         } catch {
         }
     }

@@ -24,6 +24,9 @@
         <header id="game-header">
             <div class="level-info">Level <span id="level-display">1</span></div>
             <div class="hud-cluster">
+                <div id="combo-meter" class="hidden">
+                    <span id="combo-label">Combo x1</span>
+                </div>
                 <div class="score-info">Score: <span id="score-display">0</span></div>
                 <div class="coin-info">Coins: <span id="coin-display">0</span></div>
                 <button id="shop-btn" type="button">Shop</button>
@@ -51,6 +54,7 @@
         <main id="board-area" class="hidden">
             <!-- Tiles will be dynamically injected here -->
         </main>
+        <div id="reward-fx-layer"></div>
 
         <section id="toolbelt">
             <button class="tool-btn" data-tool="undo" type="button">
@@ -135,6 +139,7 @@
     </div>
 
     <!-- We will use Javascript modules to keep the code clean -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js"></script>
     <script type="module">
         // Cache bust using current timestamp to force redownload
         const version = new Date().getTime();

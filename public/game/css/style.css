@@ -164,6 +164,23 @@ body[data-bg-theme='cosmos'] #game-header {
     text-transform: uppercase;
 }
 
+#combo-meter {
+    background: linear-gradient(180deg, #ffb347, #ff6b35);
+    color: #fff;
+    border: 4px solid #4A2E1B;
+    border-radius: 8px;
+    padding: 6px 14px;
+    box-shadow: 0 5px 0 #4A2E1B;
+    min-width: 120px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#combo-label {
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+}
+
 #shop-btn:active {
     transform: translateY(5px);
     box-shadow: 0 0 0 #4A2E1B;
@@ -174,6 +191,25 @@ body[data-bg-theme='cosmos'] #game-header {
     flex: 1;
     position: relative;
     margin: 10px;
+}
+
+#reward-fx-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 35;
+}
+
+.reward-float {
+    position: absolute;
+    padding: 8px 12px;
+    background: linear-gradient(180deg, #fff1b8, #ffcb57);
+    border: 3px solid #4A2E1B;
+    border-radius: 10px;
+    color: #4A2E1B;
+    box-shadow: 0 5px 0 rgba(74, 46, 27, 0.85);
+    font-size: 1rem;
+    white-space: nowrap;
 }
 
 /* Tiles (Cards) */
@@ -717,6 +753,123 @@ body[data-bg-theme='cosmos'] #game-header {
     box-shadow: 4px 4px 0 rgba(74, 46, 27, 0.25);
 }
 
+.shop-preview {
+    height: 94px;
+    border: 3px solid #4A2E1B;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: linear-gradient(180deg, #fff9f1, #efe1d2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.shop-preview.utility-preview {
+    gap: 8px;
+}
+
+.preview-mini-tile {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    border: 1px solid #D1C5B4;
+    box-shadow: inset 0 0 0 2px #FFFFFF, inset 0 0 0 4px #FF7A59, 0 5px 0 #A8704A, 0 7px 6px rgba(0,0,0,0.18);
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.preview-chip {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    background: rgba(74, 46, 27, 0.9);
+    color: #fff;
+    border-radius: 999px;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+}
+
+.preview-tray-royal,
+.preview-tray-mint,
+.preview-tray-ember,
+.preview-tile-neon,
+.preview-tile-night,
+.preview-tile-frost,
+.preview-bg-sunset,
+.preview-bg-aurora,
+.preview-bg-cosmos {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-tray-royal { background: linear-gradient(180deg, #7a2247, #4f1632); }
+.preview-tray-mint { background: linear-gradient(180deg, #6dc3ad, #3f8f7e); }
+.preview-tray-ember { background: linear-gradient(180deg, #7b2f1a, #47160f); }
+.preview-tile-neon { background: linear-gradient(180deg, #fff5fb, #fce7ff); }
+.preview-tile-night { background: linear-gradient(180deg, #dde8ff, #c2d1f0); }
+.preview-tile-frost { background: linear-gradient(180deg, #f7fcff, #dff2ff); }
+.preview-bg-sunset { background: linear-gradient(135deg, #ffcd8b, #f78f6b, #7a4f9a); }
+.preview-bg-aurora { background: linear-gradient(135deg, #9af1d2, #4ca7c7, #5577b8); }
+.preview-bg-cosmos { background: linear-gradient(135deg, #3d2b7a, #182047, #6f4cff); }
+
+.preview-tray-royal::before,
+.preview-tray-mint::before,
+.preview-tray-ember::before {
+    content: '';
+    width: 78%;
+    height: 42px;
+    border-radius: 14px;
+    border: 3px solid rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.14);
+    box-shadow: inset 0 4px 0 rgba(255,255,255,0.15);
+}
+
+.preview-tile-neon::before,
+.preview-tile-night::before,
+.preview-tile-frost::before {
+    content: '🍒';
+    width: 54px;
+    height: 54px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    font-size: 28px;
+}
+
+.preview-tile-neon::before { box-shadow: inset 0 0 0 2px #FFFFFF, inset 0 0 0 4px #29d8ff, 0 6px 0 #8a1f6f; }
+.preview-tile-night::before { box-shadow: inset 0 0 0 2px #f8fbff, inset 0 0 0 4px #6d83c5, 0 6px 0 #34446d; }
+.preview-tile-frost::before { box-shadow: inset 0 0 0 2px #FFFFFF, inset 0 0 0 4px #8de3ff, 0 6px 0 #4b79a7; }
+
+.preview-bg-sunset::before,
+.preview-bg-aurora::before,
+.preview-bg-cosmos::before {
+    content: '';
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.15);
+    filter: blur(8px);
+}
+
+.preview-bg-cosmos::after {
+    content: '✦ ✦ ✦';
+    color: #fff;
+    letter-spacing: 8px;
+    font-size: 18px;
+}
+
 .shop-card h4 {
     color: #4A2E1B;
     margin-bottom: 8px;
@@ -834,6 +987,9 @@ body[data-bg-theme='cosmos'] #game-header {
     }
     .hud-cluster {
         flex-wrap: wrap;
+    }
+    #combo-meter {
+        min-width: 100px;
     }
     #btn-play, #modal-action-btn {
         padding: 12px 35px;
