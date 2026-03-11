@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=800, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Tile Challenge</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,13 +23,22 @@
         <!-- Header area for scoring / level info -->
         <header id="game-header">
             <div class="level-info">Level <span id="level-display">1</span></div>
-            <div class="score-info">Score: <span id="score-display">0</span></div>
+            <div class="hud-cluster">
+                <div class="score-info">Score: <span id="score-display">0</span></div>
+                <div class="coin-info">Coins: <span id="coin-display">0</span></div>
+                <button id="shop-btn" type="button">Shop</button>
+            </div>
         </header>
 
         <!-- Start Screen / Main Menu -->
         <div id="start-screen" class="screen">
             <h1 class="game-title">Tile Challenge</h1>
             <p class="subtitle">A cozy puzzle game</p>
+            <div class="start-stats">
+                <div class="start-stat"><span>Best Score</span><strong id="start-best-score">0</strong></div>
+                <div class="start-stat"><span>Best Level</span><strong id="start-best-level">1</strong></div>
+                <div class="start-stat"><span>Coins</span><strong id="start-coins">0</strong></div>
+            </div>
             <button id="btn-play">Play Now</button>
         </div>
 
@@ -37,6 +46,21 @@
         <main id="board-area" class="hidden">
             <!-- Tiles will be dynamically injected here -->
         </main>
+
+        <section id="toolbelt">
+            <button class="tool-btn" data-tool="undo" type="button">
+                Undo
+                <span class="tool-count">0</span>
+            </button>
+            <button class="tool-btn" data-tool="shuffle" type="button">
+                Shuffle
+                <span class="tool-count">0</span>
+            </button>
+            <button class="tool-btn" data-tool="hint" type="button">
+                Hint
+                <span class="tool-count">0</span>
+            </button>
+        </section>
 
         <!-- The Selection Bar at the bottom (Max 7 slots) -->
         <footer id="selection-area">
@@ -57,6 +81,22 @@
                 <h2 id="modal-title">You Win!</h2>
                 <p id="modal-message">Great job clearing the board.</p>
                 <button id="modal-action-btn">Next Level</button>
+            </div>
+        </div>
+
+        <div id="shop-overlay" class="hidden">
+            <div id="shop-panel">
+                <div class="shop-panel-head">
+                    <div>
+                        <h2>Corner Shop</h2>
+                        <p>Spend run-earned coins on utility tools and cosmetic unlocks that personalize each run.</p>
+                    </div>
+                    <button id="shop-close-btn" type="button">Close</button>
+                </div>
+
+                <div class="shop-balance">Coins available: <span id="shop-coins">0</span></div>
+                <p id="shop-message">Pick a tool for the next tough board or dress the cabinet to match your style.</p>
+                <div id="shop-list"></div>
             </div>
         </div>
     </div>
