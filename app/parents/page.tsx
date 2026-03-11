@@ -1,117 +1,69 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import AdSlot from '../components/AdSlot';
 
 export const metadata: Metadata = {
-    title: 'Parents & Safety Guide',
-    description: 'Tile Challenge is a safe, educational, and family-friendly word puzzle game. Learn how we protect children and promote healthy screen time.',
-    keywords: ['Tile Challenge for kids', 'safe word game', 'children online safety', 'educational word game', 'family friendly games'],
+  title: 'Parents and Family Guide',
+  description: 'Information for parents about TileChallenge, including family-friendly design, advertising context, privacy considerations, and healthy play habits.',
+  keywords: ['TileChallenge parents guide', 'family-friendly puzzle game', 'browser game safety', 'kids puzzle site information']
 };
 
 export default function ParentsPage() {
-    return (
-        <>
-            <div className="page-header">
-                <div className="container">
-                    <h1 className="gradient-text">Parents &amp; Safety Guide</h1>
-                    <p>Everything parents need to know about Tile Challenge and online safety.</p>
-                </div>
-            </div>
+  return (
+    <>
+      <div className="page-header">
+        <div className="container">
+          <h1 className="gradient-text">Parents and Family Guide</h1>
+          <p>Practical information for households that want to understand what TileChallenge is and how the site is presented.</p>
+        </div>
+      </div>
 
-            <div className="page-content">
-                <h2>A Game Designed with Families in Mind</h2>
-                <p>
-                    Tile Challenge is a family-friendly word puzzle game created to provide wholesome entertainment
-                    for players of all ages. We understand that parents care deeply about what their children
-                    do online, and we&apos;ve built Tile Challenge with safety, education, and fun as our core priorities.
-                </p>
+      <div className="page-content">
+        <h2>A simple, family-friendly puzzle format</h2>
+        <p>
+          TileChallenge is a casual tile-matching puzzle game with no chat system, no public profiles, and no account requirement. The core experience is a
+          solo browser puzzle built around observation, matching, and planning.
+        </p>
 
-                <h2>Why Word Games Are Great for Kids</h2>
-                <p>
-                    Research consistently shows that word games offer significant cognitive benefits for
-                    children and adults alike. Here&apos;s what your child gains from playing Tile Challenge:
-                </p>
-                <ul>
-                    <li><strong>Vocabulary Building:</strong> Discovering new words in context helps expand vocabulary naturally and enjoyably.</li>
-                    <li><strong>Pattern Recognition:</strong> Finding words within a grid of letters develops visual scanning and pattern recognition skills.</li>
-                    <li><strong>Spelling Skills:</strong> Tracing through letters reinforces correct spelling and letter sequences.</li>
-                    <li><strong>Patience &amp; Persistence:</strong> Completing a puzzle teaches children that effort and patience lead to rewarding outcomes.</li>
-                    <li><strong>Visual Memory:</strong> Remembering word patterns and letter positions strengthens working memory.</li>
-                    <li><strong>Confidence:</strong> Successfully solving word puzzles builds self-esteem and a sense of achievement.</li>
-                </ul>
+        <h2>What parents may want to know first</h2>
+        <ul>
+          <li><strong>No sign-up required:</strong> Visitors can play without creating an account.</li>
+          <li><strong>No social interaction layer:</strong> The site does not center on chat, messaging, or user-generated posting.</li>
+          <li><strong>Short-session design:</strong> The game is easy to start and easy to leave, which makes it more manageable for quick breaks.</li>
+          <li><strong>Policy pages are available:</strong> Privacy, cookie, accessibility, and contact information are published on the site.</li>
+        </ul>
 
-                <AdSlot type="in-content" />
+        <AdSlot type="in-content" />
 
-                <h2>Our Safety Commitments</h2>
+        <h2>About learning and puzzle value</h2>
+        <p>
+          We do not position TileChallenge as a replacement for schoolwork or professional educational tools. What we can say is that puzzle games often ask
+          players to focus, compare patterns, and think a few moves ahead. For many families, that makes them a more active kind of screen time than passive browsing.
+        </p>
 
-                <h3>No Personal Data Collection from Children</h3>
-                <p>
-                    Tile Challenge does not collect any personal information from children. There are no
-                    accounts to create, no profiles to fill out, and no chat features. Your child can
-                    play freely without sharing any personal details.
-                </p>
+        <h2>Advertising on the site</h2>
+        <p>
+          TileChallenge uses ads to help support free access. We understand that families want context around that. Our goal is to keep the surrounding pages
+          informative and avoid turning the site into a thin ad wrapper. If you want more detail about data use or cookies, see the{' '}
+          <Link href="/privacy-policy">Privacy Policy</Link> and <Link href="/cookie-policy">Cookie Policy</Link>.
+        </p>
 
-                <h3>No In-App Purchases</h3>
-                <p>
-                    Tile Challenge is completely free to play with no hidden costs. There are no virtual
-                    currencies, loot boxes, or premium upgrades. Every puzzle and feature is available to
-                    everyone at no charge.
-                </p>
+        <h2>Healthy play tips for households</h2>
+        <ol>
+          <li><strong>Try a short session first:</strong> A few rounds are usually enough to understand whether the format suits your household.</li>
+          <li><strong>Talk through the strategy:</strong> Asking why a move is good can make puzzle play more engaging and thoughtful.</li>
+          <li><strong>Keep balance in mind:</strong> Puzzle games work best as one part of a wider routine that includes offline activities too.</li>
+          <li><strong>Use the help pages:</strong> The guide, FAQ, and contact page are there to answer common questions clearly.</li>
+        </ol>
 
-                <h3>No Social Features</h3>
-                <p>
-                    There are no chat rooms, messaging systems, or multiplayer features. Children cannot
-                    interact with other users, ensuring a safe solo gaming experience.
-                </p>
+        <h2>Questions or concerns</h2>
+        <p>
+          If you have a question about site content, accessibility, privacy, or how the game works, please use the <Link href="/contact">Contact page</Link>.
+          We want parents and guardians to be able to review the site with confidence.
+        </p>
 
-                <h3>Age-Appropriate Content</h3>
-                <p>
-                    All words used in Tile Challenge are carefully curated to be appropriate for all ages.
-                    Our categories — Animals, Food &amp; Drink, Science, Geography, and Daily Mix — feature
-                    educational and family-friendly vocabulary.
-                </p>
-
-                <h3>Advertisements</h3>
-                <p>
-                    Tile Challenge displays advertisements to support the free service. These ads are served
-                    by Google AdSense and comply with Google&apos;s policies regarding ads shown alongside
-                    family-friendly content. We do not serve personalized ads to users we identify as
-                    children.
-                </p>
-
-                <h2>COPPA Compliance</h2>
-                <p>
-                    We take the Children&apos;s Online Privacy Protection Act (COPPA) seriously. Tile Challenge
-                    is designed to be compliant with COPPA requirements:
-                </p>
-                <ul>
-                    <li>We do not knowingly collect personal information from children under 13</li>
-                    <li>We do not require account creation or registration</li>
-                    <li>We do not use persistent identifiers to track children across services</li>
-                    <li>The game functions without any data submission from the user</li>
-                </ul>
-
-                <h2>Tips for Parents</h2>
-                <p>
-                    While Tile Challenge is designed to be safe, we encourage parents to take an active role
-                    in their children&apos;s online activities:
-                </p>
-                <ol>
-                    <li><strong>Play together:</strong> Word puzzles are a great shared activity. Sit with your child and find words as a team.</li>
-                    <li><strong>Set time limits:</strong> Help your child maintain a healthy balance between screen time and other activities.</li>
-                    <li><strong>Discuss online safety:</strong> Use Tile Challenge as a starting point to talk about safe internet habits.</li>
-                    <li><strong>Use browser controls:</strong> Consider using parental control software to manage your child&apos;s browsing experience.</li>
-                    <li><strong>Check for updates:</strong> We regularly update our safety practices and encourage parents to revisit this page.</li>
-                </ol>
-
-                <h2>Have Concerns?</h2>
-                <p>
-                    If you have any questions or concerns about your child&apos;s experience on Tile Challenge,
-                    please don&apos;t hesitate to <a href="/contact">contact us</a>. We prioritize parent
-                    communications and respond within 24 hours to safety-related inquiries.
-                </p>
-
-                <AdSlot type="banner" />
-            </div>
-        </>
-    );
+        <AdSlot type="banner" />
+      </div>
+    </>
+  );
 }

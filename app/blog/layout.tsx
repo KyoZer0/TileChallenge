@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: 'Blog – Puzzle Tips, News & Insights',
-    description: 'Read the Tile Challenge blog for puzzle tips, brain-boosting benefits, game history, and the latest updates from our puzzle community.',
-    keywords: ['Tile Challenge blog', 'puzzle game tips', 'brain games blog', 'jigsaw puzzle articles'],
+    title: 'Blog – TileChallenge Articles and Guides',
+    description: 'Read original TileChallenge articles about gameplay, strategy, puzzle habits, and the design ideas behind the game.',
+    keywords: ['TileChallenge blog', 'tile matching strategy', 'puzzle game guides', 'browser game articles'],
 };
 
 export default function BlogLayout({

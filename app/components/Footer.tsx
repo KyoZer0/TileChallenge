@@ -2,11 +2,14 @@ import Link from 'next/link';
 
 const links = [
     { href: '/how-to-play', label: 'Guide' },
+    { href: '/blog', label: 'Blog' },
     { href: '/faq', label: 'FAQ' },
     { href: '/about', label: 'About' },
     { href: '/contact', label: 'Contact' },
+    { href: '/parents', label: 'Parents' },
     { href: '/privacy-policy', label: 'Privacy' },
     { href: '/terms', label: 'Terms' },
+    { href: '/sitemap-page', label: 'Sitemap' },
 ];
 
 export default function Footer() {

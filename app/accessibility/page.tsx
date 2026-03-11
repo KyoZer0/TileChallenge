@@ -1,91 +1,62 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 
 export const metadata: Metadata = {
-    title: 'Accessibility Statement',
-    description: 'Tile Challenge is committed to digital accessibility. Learn about our efforts to make our word puzzle game available to everyone.',
-    keywords: ['Tile Challenge accessibility', 'accessible word game', 'web accessibility statement'],
+  title: 'Accessibility Statement',
+  description: 'Learn how TileChallenge approaches accessibility across its website and browser puzzle game, including current practices and known limitations.',
+  keywords: ['TileChallenge accessibility', 'accessible browser game', 'website accessibility statement']
 };
 
 export default function AccessibilityPage() {
-    return (
-        <>
-            <div className="page-header">
-                <div className="container">
-                    <h1 className="gradient-text">Accessibility Statement</h1>
-                    <p>Our commitment to making Tile Challenge accessible to everyone.</p>
-                </div>
-            </div>
+  return (
+    <>
+      <div className="page-header">
+        <div className="container">
+          <h1 className="gradient-text">Accessibility Statement</h1>
+          <p>Our current accessibility approach for the website, along with the areas we continue to improve.</p>
+        </div>
+      </div>
 
-            <div className="page-content">
-                <p>
-                    Tile Challenge is committed to ensuring digital accessibility for people with disabilities.
-                    We are continually improving the user experience for everyone and applying the relevant
-                    accessibility standards to ensure we provide equal access to all of our users.
-                </p>
+      <div className="page-content">
+        <p>
+          TileChallenge aims to provide a website that is understandable, readable, and usable across modern devices. We treat accessibility as ongoing work,
+          not a one-time claim, and we review both the content pages and the game experience as the site evolves.
+        </p>
 
-                <h2>Our Commitment</h2>
-                <p>
-                    We strive to conform to the Web Content Accessibility Guidelines (WCAG) 2.1 at Level AA.
-                    These guidelines explain how to make web content more accessible for people with
-                    disabilities, and user-friendly for everyone.
-                </p>
+        <h2>Website accessibility practices</h2>
+        <ul>
+          <li><strong>Clear page structure:</strong> Content pages use headings, paragraphs, and lists to make information easier to follow.</li>
+          <li><strong>Responsive layouts:</strong> Pages are designed to adapt across desktop, tablet, and mobile screens.</li>
+          <li><strong>Keyboard-friendly navigation:</strong> Links and standard page controls are intended to remain reachable without a mouse.</li>
+          <li><strong>Readable content:</strong> We aim for straightforward language and scannable support pages.</li>
+        </ul>
 
-                <h2>Measures We&apos;ve Taken</h2>
-                <ul>
-                    <li><strong>Semantic HTML:</strong> Our website uses proper HTML5 semantic elements for clear document structure, making it easier for screen readers to navigate.</li>
-                    <li><strong>Keyboard Navigation:</strong> All interactive elements on the website can be accessed using a keyboard alone. We ensure visible focus indicators are present.</li>
-                    <li><strong>Color Contrast:</strong> We maintain sufficient color contrast ratios between text and backgrounds to ensure readability for users with visual impairments.</li>
-                    <li><strong>Alt Text:</strong> Images used throughout the site include descriptive alternative text for screen reader users.</li>
-                    <li><strong>Responsive Design:</strong> The website adapts to different screen sizes and zoom levels, accommodating users who need to enlarge content.</li>
-                    <li><strong>Clear Language:</strong> We use plain, clear language throughout the website to make content accessible to people with cognitive disabilities.</li>
-                    <li><strong>Consistent Navigation:</strong> Navigation patterns are consistent across all pages, reducing cognitive load.</li>
-                </ul>
+        <h2>Game-specific limitations</h2>
+        <p>
+          The puzzle itself is a highly visual experience and may present barriers for some users. Tile recognition, layered boards, and direct selection are a
+          central part of the gameplay loop, which means the game is not equally accessible to every player in its current form.
+        </p>
 
-                <h2>Game Accessibility</h2>
-                <p>
-                    We recognize that the game component of Tile Challenge presents additional accessibility
-                    challenges due to its visual and interactive nature. We are working on the following
-                    improvements:
-                </p>
-                <ul>
-                    <li>High-contrast mode for the game grid</li>
-                    <li>Keyboard-only controls for word selection</li>
-                    <li>Screen reader announcements for game events</li>
-                    <li>Optional sound effects to provide audio feedback</li>
-                    <li>Adjustable animation speeds</li>
-                </ul>
+        <h2>Areas we continue to review</h2>
+        <ul>
+          <li>Visual clarity and contrast across interactive elements</li>
+          <li>Touch and click comfort on smaller screens</li>
+          <li>Page readability around ads and embedded content</li>
+          <li>Better guidance for players who need more context before starting</li>
+        </ul>
 
-                <h2>Known Limitations</h2>
-                <p>
-                    While we strive for full accessibility, there are some known limitations:
-                </p>
-                <ul>
-                    <li>The puzzle game requires visual perception of images and spatial reasoning, which may present challenges for users with certain visual or cognitive disabilities.</li>
-                    <li>Drag-and-drop interactions in the game may be difficult for some users with motor impairments. We are exploring click-to-select alternatives.</li>
-                    <li>Some third-party content (such as advertisements) may not meet our accessibility standards.</li>
-                </ul>
+        <h2>Third-party content</h2>
+        <p>
+          Some parts of the experience, such as advertising content provided by third parties, may not fully match the standards we try to apply to our own
+          pages. We do not control every aspect of those third-party interfaces.
+        </p>
 
-                <h2>Feedback</h2>
-                <p>
-                    We welcome your feedback on the accessibility of Tile Challenge. If you encounter
-                    accessibility barriers or have suggestions for improvement, please let us know:
-                </p>
-                <ul>
-                    <li>Contact us through our <a href="/contact">Contact page</a></li>
-                    <li>Email: <strong>accessibility@Tile Challenge.online</strong></li>
-                </ul>
-                <p>
-                    We try to respond to accessibility feedback within 5 business days and will do our
-                    best to address issues promptly.
-                </p>
-
-                <h2>Continuous Improvement</h2>
-                <p>
-                    We view accessibility as an ongoing process, not a one-time effort. We regularly
-                    review our website for accessibility issues, train our team on accessibility best
-                    practices, and incorporate accessibility testing into our development workflow.
-                </p>
-            </div>
-        </>
-    );
+        <h2>Feedback</h2>
+        <p>
+          If you encounter an accessibility issue on TileChallenge or have a suggestion that would make the site easier to use, please contact us through the{' '}
+          <Link href="/contact">Contact page</Link>. Accessibility feedback helps us prioritize the improvements that matter most.
+        </p>
+      </div>
+    </>
+  );
 }

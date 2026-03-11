@@ -3,87 +3,88 @@ import Link from 'next/link';
 import AdSlot from '../components/AdSlot';
 
 export const metadata: Metadata = {
-    title: 'How to Play Tile Challenge – Complete Guide',
-    description: 'Learn how to play Tile Challenge step by step. Master swiping through letters, finding hidden words, and using hints to solve puzzles faster.',
-    keywords: ['how to play Tile Challenge', 'Tile Challenge guide', 'word game tutorial', 'fill words instructions'],
+  title: 'How to Play TileChallenge - Complete Matching Guide',
+  description:
+    'Learn how to play TileChallenge step by step. Understand the tray, matching rules, and the best ways to clear the board without filling your stack.',
+  keywords: ['how to play TileChallenge', 'tile matching guide', 'match 3 tile puzzle rules', 'TileChallenge tips']
 };
 
 export default function HowToPlayPage() {
-    return (
-        <>
-            <div className="page-header">
-                <div className="container">
-                    <h1 className="gradient-text">How to Play</h1>
-                    <p>Everything you need to know to master Tile Challenge — from your first word to advanced strategies.</p>
-                </div>
-            </div>
+  return (
+    <>
+      <div className="page-header">
+        <div className="container">
+          <h1 className="gradient-text">How to Play</h1>
+          <p>Everything you need to know to start clearing boards, protecting tray space, and making better moves.</p>
+        </div>
+      </div>
 
-            <div className="page-content">
-                <h2>Getting Started</h2>
-                <p>
-                    Tile Challenge is a word puzzle game where you swipe through a grid of letters to find hidden words.
-                    Each grid contains several words that intersect and overlap, filling every cell. Your goal is
-                    to find all the words and clear the entire grid.
-                </p>
+      <div className="page-content">
+        <h2>The goal of TileChallenge</h2>
+        <p>
+          TileChallenge is a tile-matching puzzle game. You tap open tiles to move them into the tray at the bottom of the board. When three identical
+          tiles collect in the tray, they clear automatically. You win by removing every tile from the board before the tray fills up.
+        </p>
 
-                <h3>Step 1: Look at the Grid</h3>
-                <p>
-                    Each puzzle presents you with a grid filled with letters. Hidden within the grid are several
-                    words running horizontally, vertically, or in bending paths. Every letter in the grid belongs
-                    to exactly one word.
-                </p>
+        <h2>How a turn works</h2>
+        <ol>
+          <li><strong>Scan the board:</strong> Look for matching designs that are already available to tap.</li>
+          <li><strong>Select a tile:</strong> The tile moves into your tray and becomes part of your current plan.</li>
+          <li><strong>Complete a set of three:</strong> Matching triples disappear from the tray, giving you more room.</li>
+          <li><strong>Reveal new options:</strong> Clearing tiles opens space and exposes tiles that were blocked underneath.</li>
+          <li><strong>Finish the board:</strong> Keep repeating the cycle until every tile has been cleared.</li>
+        </ol>
 
-                <h3>Step 2: Swipe to Connect Letters</h3>
-                <p>
-                    When you spot a word, swipe or drag through the letters in order. The letters will highlight
-                    as you trace your path. If the word is correct, it will lock in place and the letters will
-                    change color to show they&apos;ve been found.
-                </p>
+        <AdSlot type="in-content" />
 
-                <h3>Step 3: Clear the Grid</h3>
-                <p>
-                    Keep finding words until every letter in the grid has been claimed. The puzzle is complete
-                    when all words are found. The game tracks how many words you&apos;ve found and your solving time.
-                </p>
+        <h2>Why the tray matters</h2>
+        <p>
+          The tray is where most wins and losses are decided. A tray full of unrelated tiles gives you very little room to recover. A tray built around
+          pairs and near-complete triples gives you flexibility and momentum.
+        </p>
+        <ul>
+          <li><strong>Safe move:</strong> Adds to a pair or finishes a triple.</li>
+          <li><strong>Useful move:</strong> Reveals several new tiles or opens a crowded section.</li>
+          <li><strong>Risky move:</strong> Starts a brand-new tile type with no visible follow-up.</li>
+        </ul>
 
-                <AdSlot type="in-content" />
+        <h2>Beginner strategy that works</h2>
+        <p>
+          Start by clearing the easiest visible pairs and triples. Try not to tap too many different designs in a row. If you already have two of the same
+          tile in the tray, prioritizing the third one is often the strongest move available.
+        </p>
+        <ul>
+          <li><strong>Finish what you start:</strong> Existing pairs are usually more valuable than brand-new singles.</li>
+          <li><strong>Open dense areas early:</strong> Stacked or crowded sections are easier to manage before the tray gets busy.</li>
+          <li><strong>Pause after clears:</strong> New information appears every time tiles disappear.</li>
+          <li><strong>Avoid panic tapping:</strong> Fast random moves usually create tray clutter.</li>
+        </ul>
 
-                <h2>Hints &amp; Help</h2>
-                <p>
-                    Stuck on a tricky word? Tile Challenge offers a hint system to help you out. Use a hint to
-                    reveal the first letter of an unfound word, or highlight a word&apos;s starting position.
-                    There&apos;s no penalty for using hints — they&apos;re there to keep the game fun and flowing.
-                </p>
+        <h2>Common mistakes to avoid</h2>
+        <p>
+          The most common mistake is filling the tray with six or seven different tile designs. Another is focusing only on the top layer and ignoring what
+          your move will reveal underneath. TileChallenge rewards deliberate play more than quick reactions.
+        </p>
 
-                <h2>Difficulty Progression</h2>
-                <p>
-                    Early puzzles use smaller grids with common, shorter words. As you advance, grids grow
-                    larger, words get longer, and the vocabulary becomes more challenging. Each category
-                    has its own difficulty curve so you can pick your comfort level.
-                </p>
+        <h2>When a level feels difficult</h2>
+        <p>
+          If a board starts to feel messy, slow down and reset your attention. Look for the tile type you are closest to clearing. Then check whether a
+          crowded corner or stack can be opened with one or two clean moves. Often the best recovery starts with a small, tidy triple rather than a big gamble.
+        </p>
 
-                <h2>Tips &amp; Strategies</h2>
-                <ul>
-                    <li><strong>Start with short words:</strong> Two and three-letter words are easiest to spot and help you eliminate letters from the grid.</li>
-                    <li><strong>Look for common patterns:</strong> Prefixes like &quot;UN-&quot;, &quot;RE-&quot;, &quot;PRE-&quot; and suffixes like &quot;-ING&quot;, &quot;-TION&quot;, &quot;-LY&quot; can help you spot longer words.</li>
-                    <li><strong>Work the edges:</strong> Corner and edge letters often start or end words, making them good starting points.</li>
-                    <li><strong>Use the word count:</strong> The number of remaining words gives you a sense of how many are left to find.</li>
-                    <li><strong>Don&apos;t overthink it:</strong> Sometimes the simplest words are hiding in plain sight. Take a step back and look at the grid fresh.</li>
-                </ul>
+        <h2>Ready to play?</h2>
+        <p>
+          Use the guide above as your starting routine: scan first, build around pairs, and protect tray space. With a little patience, the board becomes
+          much easier to read.
+        </p>
+        <p style={{ marginTop: '1.5rem' }}>
+          <Link href="/play/game" className="btn btn-primary">
+            Play TileChallenge
+          </Link>
+        </p>
 
-                <h2>Ready to Play?</h2>
-                <p>
-                    Now that you know the basics, it&apos;s time to put your skills to the test!
-                    Head to the game and start finding words.
-                </p>
-                <p style={{ marginTop: '1.5rem' }}>
-                    <Link href="/#game" className="btn btn-primary">
-                        Play Now →
-                    </Link>
-                </p>
-
-                <AdSlot type="banner" />
-            </div>
-        </>
-    );
+        <AdSlot type="banner" />
+      </div>
+    </>
+  );
 }

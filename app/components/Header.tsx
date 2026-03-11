@@ -4,6 +4,7 @@ import Link from 'next/link';
 
 const navLinks = [
   { href: '/how-to-play', label: 'Guide' },
+  { href: '/blog', label: 'Blog' },
   { href: '/about', label: 'About' },
 ];
 
@@ -29,7 +30,7 @@ export default function Header() {
           ))}
         </div>
 
-        <Link href="/play" className="island-cta">
+        <Link href="/play/game" className="island-cta">
           Play Now
         </Link>
 
@@ -53,7 +54,7 @@ export default function Header() {
               {link.label}
             </Link>
           ))}
-          <Link href="/play" onClick={() => setIsOpen(false)}>
+          <Link href="/play/game" onClick={() => setIsOpen(false)}>
             Play Now
           </Link>
         </div>

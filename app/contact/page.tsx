@@ -17,7 +17,7 @@ export default function ContactPage() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
-        const mailSubject = `[Tile Challenge] ${formData.subject || 'General Inquiry'}`;
+        const mailSubject = `[TileChallenge] ${formData.subject || 'General Inquiry'}`;
         const mailBody = [
             `Name: ${formData.name}`,
             `Email: ${formData.email}`,
@@ -46,7 +46,7 @@ export default function ContactPage() {
                     <h2>Get In Touch</h2>
                     <p>
                         We value every message from our community. Whether you&apos;re reporting a bug, suggesting
-                        a new feature, asking about partnerships, or simply sharing your love for word puzzles,
+                        a new feature, asking about partnerships, or simply sharing feedback about the tile-matching game,
                         we&apos;re here to listen.
                     </p>
 
@@ -226,7 +226,7 @@ export default function ContactPage() {
                     <h2>Frequently Asked</h2>
                     <p>
                         Before reaching out, you might find your answer in our <a href="/faq">FAQ page</a>.
-                        We&apos;ve compiled answers to the most common questions about Tile Challenge, gameplay
+                        We&apos;ve compiled answers to the most common questions about TileChallenge, gameplay
                         mechanics, and technical issues.
                     </p>
                 </div>

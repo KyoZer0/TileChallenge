@@ -2,66 +2,70 @@ import type { Metadata } from 'next';
 import AdSlot from '../components/AdSlot';
 
 export const metadata: Metadata = {
-    title: 'FAQ – Tile Challenge',
-    description: 'Frequently asked questions about Tile Challenge. Find answers about gameplay, features, device support, and more.',
-    keywords: ['Tile Challenge FAQ', 'word game questions', 'Tile Challenge help'],
+  title: 'FAQ - TileChallenge',
+  description: 'Frequently asked questions about TileChallenge, including gameplay, device support, accessibility, privacy, and family-friendly use.',
+  keywords: ['TileChallenge FAQ', 'tile puzzle questions', 'TileChallenge help', 'browser puzzle support']
 };
 
 const faqs = [
-    {
-        q: 'Is Tile Challenge really free?',
-        a: 'Yes! Tile Challenge is 100% free to play. No downloads, no accounts, no hidden paywalls. Just open your browser and start finding words.',
-    },
-    {
-        q: 'What devices can I play on?',
-        a: 'Tile Challenge works on any modern browser — desktop, tablet, or mobile. The game automatically adapts to your screen size for the best experience.',
-    },
-    {
-        q: 'How does word detection work?',
-        a: 'Simply swipe through adjacent letters to spell a word. Tile Challenge instantly validates your selection — if the word is correct, it locks in and the letters change color. Every letter in the grid belongs to exactly one word.',
-    },
-    {
-        q: 'How many puzzles are there?',
-        a: 'Tile Challenge currently features hundreds of puzzles across 5 categories (Animals, Food & Drink, Science, Geography, and Daily Mix). New puzzles are added regularly.',
-    },
-    {
-        q: 'What does the difficulty progression look like?',
-        a: 'Early puzzles use smaller grids with common, short words. As you advance, grids grow larger, words get longer, and the vocabulary becomes more specialized.',
-    },
-    {
-        q: 'Can I play offline?',
-        a: 'Tile Challenge requires an internet connection to load puzzle data. Once loaded, gameplay is smooth even on slower connections.',
-    },
-    {
-        q: 'Is my progress saved?',
-        a: 'Currently, progress is not saved between sessions. We\'re working on adding progress tracking in a future update.',
-    },
-    {
-        q: 'Is Tile Challenge safe for children?',
-        a: 'Yes! Tile Challenge contains no violent or inappropriate content. It\'s a great way for kids to build vocabulary and pattern recognition skills. We also don\'t collect personal information from children.',
-    },
+  {
+    q: 'Is TileChallenge free to play?',
+    a: 'Yes. TileChallenge is free to play in your browser. There is no required download and no account is needed to start a round.'
+  },
+  {
+    q: 'What kind of game is TileChallenge?',
+    a: 'TileChallenge is a tile-matching puzzle game. You tap available tiles, build sets of three identical designs in the tray, and clear the full board before the tray fills up.'
+  },
+  {
+    q: 'What devices does the game support?',
+    a: 'The site is designed for modern desktop, tablet, and mobile browsers. If a page looks off, refreshing the browser or updating to a current version usually helps.'
+  },
+  {
+    q: 'Do I need to create an account?',
+    a: 'No. You can open the site and play without registration, profile setup, or social features.'
+  },
+  {
+    q: 'What is the most important strategy tip?',
+    a: 'Protect tray space. Finishing an existing pair is usually better than starting a new tile type with no clear follow-up.'
+  },
+  {
+    q: 'Is TileChallenge appropriate for families?',
+    a: 'Yes. The site is designed to be family-friendly, with puzzle-focused gameplay, no chat features, and clear support, privacy, and policy pages.'
+  },
+  {
+    q: 'Does the site show ads?',
+    a: 'Yes. Advertising helps support the free game and content. We aim to keep the site useful, readable, and balanced so ads do not replace the core experience.'
+  },
+  {
+    q: 'Where can I learn the rules quickly?',
+    a: 'The best starting point is the How to Play page, which explains the objective, how the tray works, and the most common beginner mistakes.'
+  },
+  {
+    q: 'How can I contact the site team?',
+    a: 'You can use the Contact page to open an email draft for support questions, feedback, accessibility concerns, or general inquiries.'
+  }
 ];
 
 export default function FAQPage() {
-    return (
-        <>
-            <div className="page-header">
-                <div className="container">
-                    <h1 className="gradient-text">Frequently Asked Questions</h1>
-                    <p>Got questions? We&apos;ve got answers.</p>
-                </div>
-            </div>
+  return (
+    <>
+      <div className="page-header">
+        <div className="container">
+          <h1 className="gradient-text">Frequently Asked Questions</h1>
+          <p>Helpful answers about the game, the website, and what to expect before you play.</p>
+        </div>
+      </div>
 
-            <div className="page-content">
-                {faqs.map((faq, i) => (
-                    <div key={i} style={{ marginBottom: '2rem' }}>
-                        <h3>{faq.q}</h3>
-                        <p>{faq.a}</p>
-                    </div>
-                ))}
+      <div className="page-content">
+        {faqs.map((faq) => (
+          <div key={faq.q} style={{ marginBottom: '2rem' }}>
+            <h3>{faq.q}</h3>
+            <p>{faq.a}</p>
+          </div>
+        ))}
 
-                <AdSlot type="banner" />
-            </div>
-        </>
-    );
+        <AdSlot type="banner" />
+      </div>
+    </>
+  );
 }

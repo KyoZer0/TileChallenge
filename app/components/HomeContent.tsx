@@ -1,5 +1,7 @@
 'use client';
 
+/* eslint-disable @typescript-eslint/no-explicit-any, react-hooks/purity, react/no-unescaped-entities, @typescript-eslint/no-unused-vars */
+
 import React, { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -620,6 +622,70 @@ export default function HomeContent() {
                                 <p style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', color: '#4A2E1B', margin: 0 }}>
                                     "It's intensely satisfying to clear that final tile."
                                 </p>
+                            </div>
+                        </div>
+
+                        <div className="feature-card blog-card" style={{
+                            background: 'var(--bg)',
+                            border: '4px solid #4A2E1B',
+                            borderRadius: '24px',
+                            padding: '2.5rem',
+                            position: 'relative',
+                            boxShadow: '4px 4px 0 rgba(0,0,0,0.3)'
+                        }}>
+                            <div style={{
+                                position: 'absolute', top: '-20px', left: '2rem',
+                                background: '#8C5A35', color: '#FFF', padding: '0.5rem 1.5rem', borderRadius: '4px',
+                                fontFamily: 'var(--font-display)', fontSize: '1.2rem', fontWeight: 700, border: '3px solid #4A2E1B',
+                                boxShadow: '4px 4px 0 #4A2E1B', textShadow: '1px 1px 0px #4A2E1B', textTransform: 'uppercase'
+                            }}>
+                                From the Blog
+                            </div>
+
+                            <h3 style={{ fontFamily: 'var(--font-display)', fontSize: '2.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>
+                                Learn the game faster
+                            </h3>
+
+                            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem', lineHeight: 1.7, marginBottom: '1.5rem' }}>
+                                If you want more than a quick rules summary, these articles explain the basics, strategy, and the thinking behind TileChallenge.
+                            </p>
+
+                            <div style={{ display: 'grid', gap: '1rem' }}>
+                                {[
+                                    {
+                                        href: '/blog/how-to-play-tilechallenge',
+                                        title: 'How to Play TileChallenge',
+                                        desc: 'A beginner-friendly walkthrough of the rules, tray management, and smart first moves.'
+                                    },
+                                    {
+                                        href: '/blog/tile-matching-strategy-guide',
+                                        title: 'Tile-Matching Strategy Guide',
+                                        desc: 'Eight practical ways to make steadier decisions and clear the board more consistently.'
+                                    },
+                                    {
+                                        href: '/blog/benefits-of-puzzle-games-for-focus-and-problem-solving',
+                                        title: 'Puzzle Games, Focus, and Problem-Solving',
+                                        desc: 'A balanced look at why puzzle play can feel mentally engaging without making exaggerated claims.'
+                                    }
+                                ].map((post) => (
+                                    <Link
+                                        key={post.href}
+                                        href={post.href}
+                                        className="card"
+                                        style={{ textDecoration: 'none', color: 'inherit', border: '3px solid #4A2E1B', background: '#F5EFEB' }}
+                                    >
+                                        <h4 style={{ fontFamily: 'var(--font-display)', fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '0.35rem', fontWeight: 700 }}>
+                                            {post.title}
+                                        </h4>
+                                        <p style={{ margin: 0, color: 'var(--text-secondary)', lineHeight: 1.6 }}>{post.desc}</p>
+                                    </Link>
+                                ))}
+                            </div>
+
+                            <div style={{ marginTop: '1.5rem' }}>
+                                <Link href="/blog" className="btn btn-secondary" style={{ textDecoration: 'none' }}>
+                                    Visit the Blog
+                                </Link>
                             </div>
                         </div>
                     </div>

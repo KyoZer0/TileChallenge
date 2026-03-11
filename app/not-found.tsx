@@ -92,7 +92,7 @@ export default function NotFound() {
                     marginLeft: 'auto',
                     marginRight: 'auto'
                 }}>
-                    The piece you're looking for seems to be missing. It might have been moved, deleted, or never existed in the first place.
+                    The piece you&apos;re looking for seems to be missing. It might have been moved, deleted, or never existed in the first place.
                 </p>
 
                 <div className="animate-text delay-4">
